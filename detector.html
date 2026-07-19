@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Archivo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:#f7f4ee}
+a{color:#2f6b47}
+a:hover{color:#234f36}
+input[type=text],input[type=number]{font:inherit;border:1px solid rgba(42,37,33,.15);border-radius:10px;padding:10px 12px;width:100%;background:#fff;color:#2A2521}
+input[type=text]:focus,input[type=number]:focus{outline:2px solid #2f6b47;outline-offset:1px}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.035)}}
+</style>
+</helmet>
+
+<div style="min-height:100vh;background:#f7f4ee;color:#2A2521;font-family:'Archivo',sans-serif">
+
+<nav style="position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:0 clamp(20px,4vw,52px);height:60px;background:rgba(247,244,238,.94);backdrop-filter:blur(6px);border-bottom:1px solid rgba(42,37,33,.08)">
+  <a href="index.html" style="font:500 13.5px/1 'Archivo',sans-serif;color:#6b6256;text-decoration:none;display:flex;align-items:center;gap:6px">← R.A.S.T.R.O.</a>
+  <a href="index.html#checkup" style="background:#e8a13c;color:#234f36;font:800 13px/1 'Archivo',sans-serif;padding:10px 18px;border-radius:999px;border:2px solid #234f36;text-decoration:none;white-space:nowrap">Ver o Check-up →</a>
+</nav>
+
+<section style="padding:clamp(40px,6vw,64px) clamp(20px,5vw,64px) 0;max-width:900px;margin:0 auto;text-align:center">
+  <div style="display:inline-flex;align-items:center;gap:7px;font:700 10.5px/1 'Archivo',sans-serif;letter-spacing:.14em;text-transform:uppercase;color:#234f36;background:#bfe0c4;padding:7px 13px;border-radius:999px;margin-bottom:20px">Ferramenta grátis · Passo A do R.A.S.T.R.O.</div>
+  <h1 style="font-family:'Spectral',serif;font-weight:600;font-size:clamp(30px,5vw,50px);line-height:1.06;letter-spacing:-.01em;margin:0 0 14px;color:#e8a13c">Detector de Vazamentos Invisíveis™</h1>
+  <p style="font:400 clamp(15px,1.6vw,18px)/1.65 'Archivo',sans-serif;color:#5c554b;max-width:560px;margin:0 auto">Marque os gastinhos que saem do seu bolso sem você notar. Em 1 minuto você vê quanto isso vira por ano — e no que virava se estivesse investido.</p>
+  <p style="font:700 15px/1 'Archivo',sans-serif;color:#e8a13c;margin:18px 0 0">Preencha seus vazamentos agora, de graça ↓</p>
+</section>
+
+<section style="padding:clamp(32px,5vw,48px) clamp(20px,5vw,64px) 100px;max-width:1080px;margin:0 auto;display:grid;grid-template-columns:1.15fr .85fr;gap:clamp(24px,4vw,40px);align-items:start" class="detector-grid">
+
+  <div>
+    <div style="font:700 11px/1 'Archivo',sans-serif;letter-spacing:.14em;text-transform:uppercase;color:#8a7f6a;margin-bottom:16px">Marque o que se aplica a você</div>
+    <div style="display:flex;flex-direction:column;gap:2px">
+      <sc-for list="{{ items }}" as="it" hint-placeholder-count="8">
+        <div style="display:grid;grid-template-columns:26px 1fr auto 108px 30px;gap:12px;align-items:center;padding:13px 4px;border-bottom:1px solid rgba(42,37,33,.08)" class="leak-row">
+          <input type="checkbox" checked="{{ it.checked }}" onChange="{{ it.onToggle }}" style="width:19px;height:19px;accent-color:#2f6b47;cursor:pointer">
+          <div>
+            <div style="font:600 14.5px/1.3 'Archivo',sans-serif;color:#2A2521">{{ it.label }}</div>
+            <div style="font:400 12.5px/1.4 'Archivo',sans-serif;color:#8a7f6a">{{ it.freqLabel }}</div>
+          </div>
+          <span style="font:500 13px/1 'Archivo',sans-serif;color:#6b6256">R$</span>
+          <input type="number" min="0" step="1" value="{{ it.displayValue }}" onChange="{{ it.onValueChange }}" onFocus="{{ selectAll }}" style="text-align:right">
+          <button onClick="{{ it.onRemove }}" title="Excluir" style="width:26px;height:26px;border-radius:50%;border:1px solid rgba(42,37,33,.15);background:#fff;color:#8a7f6a;font:600 14px/1 'Archivo',sans-serif;cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0">×</button>
+        </div>
+      </sc-for>
+    </div>
+
+    <div style="margin-top:22px;background:#fff;border:1px dashed rgba(42,37,33,.18);border-radius:14px;padding:18px 20px">
+      <div style="font:700 11px/1 'Archivo',sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#8a7f6a;margin-bottom:12px">＋ Adicionar um vazamento seu</div>
+      <div style="display:flex;flex-direction:column;gap:10px" class="add-row">
+        <input type="text" placeholder="Ex: assinatura esquecida" value="{{ draftLabel }}" onChange="{{ setDraftLabel }}" style="width:100%;padding:13px 14px;font-size:15px">
+        <div style="display:grid;grid-template-columns:140px auto;gap:10px">
+          <div style="position:relative">
+            <input type="number" placeholder="R$" min="0" value="{{ draftValue }}" onChange="{{ setDraftValue }}" onFocus="{{ selectAll }}" style="padding-right:56px">
+            <span style="position:absolute;right:12px;top:50%;transform:translateY(-50%);font:500 12px/1 'Archivo',sans-serif;color:#8a7f6a">/mês</span>
+          </div>
+          <button onClick="{{ addCustomItem }}" style="background:#2f6b47;color:#fff;border:none;border-radius:10px;padding:0 18px;font:600 13.5px/1 'Archivo',sans-serif;cursor:pointer">Adicionar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div style="position:sticky;top:76px">
+    <div style="background:#234f36;border-radius:22px;padding:clamp(26px,3vw,34px);box-shadow:0 30px 60px -34px rgba(35,79,54,.6)" class="result-card">
+      <div style="font:700 10.5px/1 'Archivo',sans-serif;letter-spacing:.14em;text-transform:uppercase;color:#9cc6a6;margin-bottom:18px">Seu resultado agora</div>
+
+      <div style="margin-bottom:20px">
+        <div style="font:500 13px/1 'Archivo',sans-serif;color:#cfe4d3;margin-bottom:6px">Você está vazando</div>
+        <div style="font-family:'Spectral',serif;font-weight:700;font-size:clamp(34px,4vw,46px);color:#fff;line-height:1;letter-spacing:-.01em">R$ {{ monthlyFormatted }}<span style="font-size:16px;font-weight:500;color:#9cc6a6">/mês</span></div>
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:20px">
+        <div style="display:flex;justify-content:space-between;align-items:center;background:rgba(255,255,255,.08);border-radius:10px;padding:13px 15px">
+          <span style="font:500 13px/1 'Archivo',sans-serif;color:#cfe4d3">em 1 ano</span>
+          <span style="font-family:'Spectral',serif;font-weight:700;font-size:19px;color:#fff">R$ {{ yearlyFormatted }}</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center;background:#bfe0c4;border-radius:10px;padding:13px 15px">
+          <span style="font:600 13px/1 'Archivo',sans-serif;color:#234f36">investido, em 10 anos</span>
+          <span style="font-family:'Spectral',serif;font-weight:700;font-size:19px;color:#234f36">R$ {{ investedFormatted }}</span>
+        </div>
+      </div>
+
+      <p style="font:400 12.5px/1.5 'Archivo',sans-serif;color:#9cc6a6;margin-bottom:20px">Valor que você acumularia estancando esses vazamentos e os investindo a 9% a.a. Meramente exemplificativo — não se trata de taxa real ou recomendação de investimento. Para conhecer suas opções, converse com o gerente do seu banco.</p>
+
+      <sc-if value="{{ emailSent }}" hint-placeholder-val="{{ false }}">
+        <div style="background:rgba(191,224,196,.15);border:1px solid rgba(191,224,196,.4);border-radius:12px;padding:14px 16px;margin-bottom:16px;font:500 13.5px/1.4 'Archivo',sans-serif;color:#bfe0c4">✓ Enviado! Confira sua caixa de entrada (e o spam).</div>
+      </sc-if>
+      <sc-if value="{{ emailNotSent }}" hint-placeholder-val="{{ true }}">
+        <div style="background:rgba(255,255,255,.06);border-radius:12px;padding:16px;margin-bottom:16px">
+          <div style="font:600 13px/1.3 'Archivo',sans-serif;color:#fff;margin-bottom:10px">Quer receber esse resultado por e-mail?</div>
+          <div style="display:flex;gap:8px">
+            <input type="email" placeholder="seu@email.com" value="{{ emailValue }}" onChange="{{ setEmailValue }}" style="flex:1;min-width:0;border-radius:8px;padding:10px 12px;border:1px solid rgba(255,255,255,.2);background:#fff;color:#2A2521">
+            <button onClick="{{ sendEmail }}" style="background:#bfe0c4;color:#234f36;border:none;border-radius:8px;padding:0 16px;font:700 13px/1 'Archivo',sans-serif;cursor:pointer">Enviar</button>
+          </div>
+          <a href="{{ whatsappLink }}" target="_blank" style="display:flex;align-items:center;justify-content:center;gap:6px;margin-top:10px;color:#9cc6a6;font:600 12.5px/1 'Archivo',sans-serif;text-decoration:none;padding:8px;border-radius:8px;border:1px solid rgba(255,255,255,.15)">📱 Prefiro receber no WhatsApp</a>
+        </div>
+      </sc-if>
+
+      <a href="index.html#checkup" style="display:block;text-align:center;background:#e8a13c;color:#234f36;font:800 16px/1 'Archivo',sans-serif;padding:17px;border-radius:999px;border:2px solid #f7f4ee;text-decoration:none;margin-bottom:12px;box-shadow:0 10px 24px -8px rgba(0,0,0,.4)">Quero o diagnóstico completo →</a>
+      <button onClick="{{ shareResult }}" style="display:block;width:100%;text-align:center;background:transparent;color:#cfe4d3;font:600 13.5px/1 'Archivo',sans-serif;padding:12px 16px;border:1px solid rgba(255,255,255,.25);border-radius:16px;cursor:pointer;line-height:1.4;margin-bottom:8px">{{ shareLabel }}<br><span style="font:400 12px/1.3 'Archivo',sans-serif;color:#9cc6a6">Compartilhe seu resultado com alguém que também precisa descobrir seus vazamentos</span></button>
+      <button onClick="{{ generateImage }}" style="display:block;width:100%;text-align:center;background:transparent;color:#9cc6a6;font:600 12.5px/1 'Archivo',sans-serif;padding:10px;border:1px dashed rgba(255,255,255,.25);border-radius:12px;cursor:pointer">{{ imageLabel }}</button>
+      <canvas id="share-canvas" width="1080" height="1080" style="display:none"></canvas>
+    </div>
+
+    <div style="margin-top:16px;text-align:center;font:400 12.5px/1.5 'Archivo',sans-serif;color:#8a7f6a">Isso foi só o passo <strong style="color:#2f6b47">A</strong> do método R.A.S.T.R.O. As outras 5 etapas estão no Check-up.</div>
+  </div>
+
+</section>
+
+<div style="text-align:center;padding:0 20px 40px">
+  <a href="https://rastrodoseudinheiro.com.br" style="font:600 13px/1.4 'Archivo',sans-serif;color:#2f6b47;text-decoration:none">rastrodoseudinheiro.com.br</a>
+</div>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+const CATALOG = [
+  {id:'cafe', label:'Cafezinho / padaria', freq:'monthly', freqLabel:'por mês', value:0, checked:false},
+  {id:'streaming', label:'Assinaturas de streaming', freq:'monthly', freqLabel:'por mês', value:0, checked:false},
+  {id:'delivery', label:'Delivery de comida', freq:'monthly', freqLabel:'por mês', value:0, checked:false},
+  {id:'esquecida', label:'Assinatura esquecida (app, curso)', freq:'monthly', freqLabel:'por mês', value:0, checked:false},
+  {id:'transporte', label:'Uber/99 em trajetos curtos', freq:'monthly', freqLabel:'por mês', value:0, checked:false},
+  {id:'cigarro', label:'Cigarro', freq:'monthly', freqLabel:'por mês', value:0, checked:false},
+  {id:'impulso', label:'Compras por impulso (app)', freq:'monthly', freqLabel:'por mês', value:0, checked:false},
+  {id:'academia', label:'Academia pouco usada', freq:'monthly', freqLabel:'por mês', value:0, checked:false},
+  {id:'cartao', label:'Compras esquecidas no cartão de crédito', freq:'monthly', freqLabel:'por mês', value:0, checked:false},
+];
+
+function toMonthly(value, freq) {
+  if (freq === 'daily') return value * 30;
+  if (freq === 'weekly') return value * 4.33;
+  return value;
+}
+
+function fmt(n) {
+  return Math.round(n).toLocaleString('pt-BR');
+}
+
+class Component extends DCLogic {
+  state = {
+    items: CATALOG.map(it => ({ ...it })),
+    draftLabel: '',
+    draftValue: '',
+    draftFreq: 'monthly',
+    shareLabel: 'Compartilhar meu resultado',
+    emailValue: '',
+    emailSent: false,
+    imageLabel: '🖼 Gerar imagem para compartilhar',
+  };
+
+  setEmailValue = (e) => this.setState({ emailValue: e.target.value });
+
+  sendEmail = () => {
+    if (!this.state.emailValue.trim() || !this.state.emailValue.includes('@')) return;
+    this.setState({ emailSent: true });
+  };
+
+  toggleItem = (id) => {
+    this.setState(s => ({
+      items: s.items.map(it => it.id === id ? { ...it, checked: !it.checked } : it)
+    }));
+  };
+
+  updateValue = (id, e) => {
+    const v = parseFloat(e.target.value) || 0;
+    this.setState(s => ({
+      items: s.items.map(it => it.id === id ? { ...it, value: v, checked: v > 0 ? true : it.checked } : it)
+    }));
+  };
+
+  selectAll = (e) => e.target.select();
+
+  removeItem = (id) => {
+    this.setState(s => ({ items: s.items.filter(it => it.id !== id) }));
+  };
+
+  setDraftLabel = (e) => this.setState({ draftLabel: e.target.value });
+  setDraftValue = (e) => this.setState({ draftValue: e.target.value });
+  setDraftFreq = (e) => this.setState({ draftFreq: e.target.value });
+
+  addCustomItem = () => {
+    const { draftLabel, draftValue } = this.state;
+    if (!draftLabel.trim() || !draftValue) return;
+    this.setState(s => ({
+      items: [...s.items, {
+        id: 'custom-' + Date.now(),
+        label: draftLabel.trim(),
+        freq: 'monthly',
+        freqLabel: 'por mês',
+        value: parseFloat(draftValue) || 0,
+        checked: true,
+      }],
+      draftLabel: '', draftValue: '',
+    }));
+  };
+
+  shareResult = async () => {
+    const monthly = this.getMonthly();
+    const text = `Descobri que estou vazando R$ ${fmt(monthly)}/mês sem perceber — R$ ${fmt(monthly*12)}/ano! Testa o seu: `;
+    const url = window.location.href;
+    if (navigator.share) {
+      try { await navigator.share({ text, url }); return; } catch (e) {}
+    }
+    try {
+      await navigator.clipboard.writeText(text + url);
+      this.setState({ shareLabel: 'Link copiado ✓' });
+      setTimeout(() => this.setState({ shareLabel: 'Compartilhar meu resultado' }), 2200);
+    } catch (e) {}
+  };
+
+  getWhatsappLink() {
+    const monthly = this.getMonthly();
+    const msg = monthly > 0
+      ? `Olá! Descobri que estou vazando R$ ${fmt(monthly)}/mês. Quero receber meu resultado e saber mais sobre o Check-up Financeiro.`
+      : `Olá! Quero saber mais sobre o Check-up Financeiro e o Detector de Vazamentos Invisíveis.`;
+    // TODO: trocar 5500000000000 pelo número real de WhatsApp da Ilana
+    return `https://wa.me/5500000000000?text=${encodeURIComponent(msg)}`;
+  }
+
+  generateImage = async () => {
+    const canvas = document.getElementById('share-canvas');
+    const ctx = canvas.getContext('2d');
+    const W = 1080, H = 1080;
+    const monthly = this.getMonthly();
+    const yearly = monthly * 12;
+    const r = 0.09 / 12, n = 120;
+    const invested = monthly * ((Math.pow(1 + r, n) - 1) / r);
+
+    ctx.fillStyle = '#234f36';
+    ctx.fillRect(0, 0, W, H);
+    ctx.fillStyle = 'rgba(255,255,255,.05)';
+    ctx.beginPath(); ctx.arc(W - 60, 60, 220, 0, Math.PI * 2); ctx.fill();
+
+    ctx.fillStyle = '#bfe0c4';
+    ctx.font = '700 28px Archivo, sans-serif';
+    ctx.fillText('DETECTOR DE VAZAMENTOS INVISÍVEIS™', 70, 130);
+
+    ctx.fillStyle = '#cfe4d3';
+    ctx.font = '500 30px Archivo, sans-serif';
+    ctx.fillText('Estou vazando', 70, 260);
+
+    ctx.fillStyle = '#fff';
+    ctx.font = '700 110px Spectral, serif';
+    ctx.fillText('R$ ' + fmt(monthly), 70, 380);
+    ctx.font = '500 34px Archivo, sans-serif';
+    ctx.fillStyle = '#9cc6a6';
+    ctx.fillText('por mês', 70, 425);
+
+    function row(y, label, value, boxColor, textColor) {
+      ctx.fillStyle = boxColor;
+      ctx.beginPath();
+      ctx.roundRect(70, y, W - 140, 110, 16);
+      ctx.fill();
+      ctx.fillStyle = textColor;
+      ctx.font = '600 30px Archivo, sans-serif';
+      ctx.fillText(label, 100, y + 68);
+      ctx.font = '700 40px Spectral, serif';
+      ctx.textAlign = 'right';
+      ctx.fillText(value, W - 100, y + 70);
+      ctx.textAlign = 'left';
+    }
+    row(500, 'em 1 ano', 'R$ ' + fmt(yearly), 'rgba(255,255,255,.08)', '#fff');
+    row(630, 'investido, em 10 anos', 'R$ ' + fmt(invested), '#bfe0c4', '#234f36');
+
+    ctx.fillStyle = '#9cc6a6';
+    ctx.font = '400 22px Archivo, sans-serif';
+    const disclaimer = 'Meramente exemplificativo — não se trata de taxa real ou recomendação de investimento. Para conhecer suas opções, converse com o gerente do seu banco.';
+    const maxWidth = W - 140;
+    const words = disclaimer.split(' ');
+    let line = '', y = 810;
+    for (const word of words) {
+      const test = line + word + ' ';
+      if (ctx.measureText(test).width > maxWidth && line) {
+        ctx.fillText(line.trim(), 70, y);
+        line = word + ' ';
+        y += 30;
+      } else {
+        line = test;
+      }
+    }
+    if (line) { ctx.fillText(line.trim(), 70, y); y += 30; }
+
+    ctx.fillStyle = '#e8a13c';
+    ctx.font = '700 32px Archivo, sans-serif';
+    ctx.fillText('Faça o seu teste grátis →', 70, y + 60);
+    ctx.fillStyle = '#fff';
+    ctx.font = '500 26px Archivo, sans-serif';
+    ctx.fillText('Para onde foi o meu dinheiro?', 70, y + 110);
+
+    canvas.toBlob(async (blob) => {
+      const file = new File([blob], 'meus-vazamentos.png', { type: 'image/png' });
+      if (navigator.canShare && navigator.canShare({ files: [file] })) {
+        try { await navigator.share({ files: [file], text: 'Descobri meus vazamentos invisíveis!' }); return; } catch (e) {}
+      }
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url; a.download = 'meus-vazamentos.png';
+      a.click();
+      URL.revokeObjectURL(url);
+    }, 'image/png');
+
+    this.setState({ imageLabel: '✓ Imagem gerada!' });
+    setTimeout(() => this.setState({ imageLabel: '🖼 Gerar imagem para compartilhar' }), 2500);
+  };
+
+  getMonthly() {
+    return this.state.items.filter(it => it.checked).reduce((sum, it) => sum + toMonthly(it.value, it.freq), 0);
+  }
+
+  renderVals() {
+    const monthly = this.getMonthly();
+    const yearly = monthly * 12;
+    const r = 0.09 / 12;
+    const n = 120;
+    const invested = monthly * ((Math.pow(1 + r, n) - 1) / r);
+    return {
+      items: this.state.items.map(it => ({
+        ...it,
+        displayValue: it.checked ? it.value : 0,
+        onToggle: () => this.toggleItem(it.id),
+        onValueChange: (e) => this.updateValue(it.id, e),
+        onRemove: () => this.removeItem(it.id),
+      })),
+      draftLabel: this.state.draftLabel,
+      draftValue: this.state.draftValue,
+      draftFreq: this.state.draftFreq,
+      shareLabel: this.state.shareLabel,
+      toggleItem: this.toggleItem,
+      updateValue: this.updateValue,
+      setDraftLabel: this.setDraftLabel,
+      setDraftValue: this.setDraftValue,
+      setDraftFreq: this.setDraftFreq,
+      addCustomItem: this.addCustomItem,
+      shareResult: this.shareResult,
+      selectAll: this.selectAll,
+      emailValue: this.state.emailValue,
+      setEmailValue: this.setEmailValue,
+      sendEmail: this.sendEmail,
+      emailSent: this.state.emailSent,
+      emailNotSent: !this.state.emailSent,
+      whatsappLink: this.getWhatsappLink(),
+      generateImage: this.generateImage,
+      imageLabel: this.state.imageLabel,
+      monthlyFormatted: fmt(monthly),
+      yearlyFormatted: fmt(yearly),
+      investedFormatted: fmt(invested),
+    };
+  }
+}
+
+</script>
+</body>
+</html>
