@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow,noarchive">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Archivo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:#f7f4ee}
+a{color:#2f6b47}
+a:hover{color:#234f36}
+input[type=number],select{font:inherit;border:1px solid rgba(42,37,33,.15);border-radius:10px;padding:11px 12px;width:100%;background:#fff;color:#2A2521}
+input[type=number]:focus,select:focus{outline:2px solid #2f6b47;outline-offset:1px}
+label.fld{display:block;font:600 12.5px/1.4 'Archivo',sans-serif;color:#5c554b;margin-bottom:6px}
+.sec{background:#fff;border:1px solid rgba(42,37,33,.08);border-radius:16px;padding:clamp(22px,3vw,30px);margin-bottom:18px}
+</style>
+</helmet>
+
+<div style="min-height:100vh;background:#f7f4ee;color:#2A2521;font-family:'Archivo',sans-serif">
+
+<nav style="position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:0 clamp(20px,4vw,52px);height:60px;background:rgba(247,244,238,.94);backdrop-filter:blur(6px);border-bottom:1px solid rgba(42,37,33,.08)">
+  <a href="index.html" style="font:500 13.5px/1 'Archivo',sans-serif;color:#6b6256;text-decoration:none;display:flex;align-items:center;gap:6px">← R.A.S.T.R.O.</a>
+  <a href="index.html" style="background:#e8a13c;color:#234f36;font:800 13px/1 'Archivo',sans-serif;padding:10px 18px;border-radius:999px;border:2px solid #234f36;text-decoration:none;white-space:nowrap">Ver o Check-up R.A.S.T.R.O. →</a>
+</nav>
+
+<section style="padding:clamp(40px,6vw,64px) clamp(20px,5vw,64px) 0;max-width:900px;margin:0 auto;text-align:center">
+  <div style="display:inline-flex;align-items:center;gap:7px;font:700 10.5px/1 'Archivo',sans-serif;letter-spacing:.14em;text-transform:uppercase;color:#234f36;background:#bfe0c4;padding:7px 13px;border-radius:999px;margin-bottom:20px">Bônus do livro · R.A.S.T.R.O.</div>
+  <h1 style="font-family:'Spectral',serif;font-weight:600;font-size:clamp(30px,5vw,50px);line-height:1.06;letter-spacing:-.01em;margin:0 0 14px;color:#2f6b47">Índice Financeiro™</h1>
+  <p style="font:400 clamp(15px,1.6vw,18px)/1.65 'Archivo',sans-serif;color:#5c554b;max-width:640px;margin:0 auto">Preencha valores reais — sem eles, o diagnóstico é só achismo. Leva uns 5 minutos e no fim você recebe um raio-x completo: moradia, dívidas, reserva, aposentadoria e mais.</p>
+</section>
+
+<section style="padding:clamp(32px,5vw,40px) clamp(20px,5vw,64px) 100px;max-width:760px;margin:0 auto">
+
+  <div class="sec">
+    <div style="font:700 11px/1 'Archivo',sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#2f6b47;margin-bottom:18px">1 · Renda e perfil</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px">
+      <div><label class="fld">Sexo (usado no cálculo do INSS)</label>
+        <select value="{{ form.sexo }}" onChange="{{ on_sexo }}"><option value="">Selecione</option><option value="F">Feminino</option><option value="M">Masculino</option></select>
+      </div>
+      <div><label class="fld">Idade atual</label><input type="number" min="0" value="{{ form.idade }}" onChange="{{ on_idade }}" placeholder="anos"></div>
+    </div>
+    <div style="margin-bottom:16px"><label class="fld">Renda mensal líquida — o que entra na sua conta, de fato (R$)</label><input type="number" min="0" value="{{ form.rendaLiquida }}" onChange="{{ on_rendaLiquida }}" placeholder="Ex: 4500"></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+      <div><label class="fld">Tipo de renda</label>
+        <select value="{{ form.tipoRenda }}" onChange="{{ on_tipoRenda }}"><option value="">Selecione</option><option value="fixa">Fixa (CLT, salário)</option><option value="variavel">Variável (freela, autônomo)</option></select>
+      </div>
+      <div><label class="fld">Estabilidade do emprego/renda</label>
+        <select value="{{ form.estabilidade }}" onChange="{{ on_estabilidade }}"><option value="">Selecione</option><option value="estavel">Muito estável</option><option value="moderada">Moderada</option><option value="instavel">Instável</option></select>
+      </div>
+    </div>
+  </div>
+
+  <div class="sec">
+    <div style="font:700 11px/1 'Archivo',sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#2f6b47;margin-bottom:18px">2 · Gastos e dívidas</div>
+    <div style="margin-bottom:16px"><label class="fld">Gastos fixos mensais totais (aluguel/financiamento + contas + parcelas) (R$)</label><input type="number" min="0" value="{{ form.gastosFixos }}" onChange="{{ on_gastosFixos }}" placeholder="Ex: 2200"></div>
+    <div style="margin-bottom:16px"><label class="fld">Quanto sobra no fim do mês? (pode ser negativo) (R$)</label><input type="number" value="{{ form.sobraMes }}" onChange="{{ on_sobraMes }}" placeholder="Ex: -300"></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+      <div><label class="fld">Tem dívida com juros altos (cartão, cheque especial)?</label>
+        <select value="{{ form.temDividaJuros }}" onChange="{{ on_temDividaJuros }}"><option value="">Selecione</option><option value="nao">Não</option><option value="sim">Sim</option></select>
+      </div>
+      <div><label class="fld">Saldo devedor total (R$)</label><input type="number" min="0" value="{{ form.dividaTotal }}" onChange="{{ on_dividaTotal }}" placeholder="Ex: 5000"></div>
+    </div>
+    <sc-if value="{{ showTaxa }}" hint-placeholder-val="{{ false }}">
+      <div style="margin-top:16px"><label class="fld">Taxa de juros aproximada dessa dívida (% ao mês) — se não souber, pergunte ao seu gerente ou confira na fatura</label><input type="number" min="0" step="0.1" value="{{ form.taxaJuros }}" onChange="{{ on_taxaJuros }}" placeholder="Ex: 12"></div>
+    </sc-if>
+  </div>
+
+  <div class="sec">
+    <div style="font:700 11px/1 'Archivo',sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#2f6b47;margin-bottom:18px">3 · Reserva e patrimônio</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+      <div><label class="fld">Reserva de emergência atual (R$)</label><input type="number" min="0" value="{{ form.reservaAtual }}" onChange="{{ on_reservaAtual }}" placeholder="Ex: 3000"></div>
+      <div><label class="fld">Patrimônio quitado — valor de venda estimado, caso precisasse vender (casa, carro, imóveis) (R$)</label><input type="number" min="0" value="{{ form.patrimonio }}" onChange="{{ on_patrimonio }}" placeholder="Ex: 0"></div>
+    </div>
+  </div>
+
+  <div class="sec">
+    <div style="font:700 11px/1 'Archivo',sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#2f6b47;margin-bottom:18px">4 · Dependentes e responsabilidade</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px">
+      <div><label class="fld">Quantos dependentes financeiros você tem?</label><input type="number" min="0" value="{{ form.dependentes }}" onChange="{{ on_dependentes }}" placeholder="0"></div>
+      <div><label class="fld">É o único responsável financeiro da casa?</label>
+        <select value="{{ form.unicoResponsavel }}" onChange="{{ on_unicoResponsavel }}"><option value="">Selecione</option><option value="sim">Sim</option><option value="nao">Não, divido</option></select>
+      </div>
+    </div>
+    <sc-if value="{{ showFaculdade }}" hint-placeholder-val="{{ false }}">
+      <div><label class="fld">Algum dependente vai (ou está) na faculdade?</label>
+        <select value="{{ form.dependenteFaculdade }}" onChange="{{ on_dependenteFaculdade }}"><option value="">Selecione</option><option value="nao">Não</option><option value="sim_publica">Sim, faculdade pública ou já garantida</option><option value="sim_sem_plano">Sim, e ainda não sei como pagar</option></select>
+      </div>
+    </sc-if>
+  </div>
+
+  <div class="sec">
+    <div style="font:700 11px/1 'Archivo',sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#2f6b47;margin-bottom:18px">5 · Proteção</div>
+    <div><label class="fld">Você tem seguro de vida e/ou saúde?</label>
+      <select value="{{ form.seguro }}" onChange="{{ on_seguro }}"><option value="">Selecione</option><option value="nenhum">Nenhum dos dois</option><option value="um">Só um deles</option><option value="ambos">Os dois</option></select>
+    </div>
+  </div>
+
+  <div class="sec">
+    <div style="font:700 11px/1 'Archivo',sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#2f6b47;margin-bottom:18px">6 · Aposentadoria (INSS)</div>
+    <div><label class="fld">Há quantos anos você contribui pro INSS?</label><input type="number" min="0" value="{{ form.tempoContribuicao }}" onChange="{{ on_tempoContribuicao }}" placeholder="Ex: 10"></div>
+  </div>
+
+  <div class="sec">
+    <div style="font:700 11px/1 'Archivo',sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#2f6b47;margin-bottom:18px">7 · Previdência privada</div>
+    <div style="margin-bottom:16px"><label class="fld">Você tem previdência privada?</label>
+      <select value="{{ form.temPrevidencia }}" onChange="{{ on_temPrevidencia }}"><option value="">Selecione</option><option value="nao">Não</option><option value="sim">Sim</option></select>
+    </div>
+    <sc-if value="{{ showPrevidencia }}" hint-placeholder-val="{{ false }}">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px">
+        <div><label class="fld">A empresa contribui também (co-participação)?</label>
+          <select value="{{ form.prevContribEmpresa }}" onChange="{{ on_prevContribEmpresa }}"><option value="">Selecione</option><option value="nao">Não</option><option value="sim">Sim</option></select>
+        </div>
+        <div><label class="fld">Valor total acumulado hoje (R$)</label><input type="number" min="0" value="{{ form.prevValorAtual }}" onChange="{{ on_prevValorAtual }}" placeholder="Ex: 20000"></div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+        <div><label class="fld">Rentabilidade média aproximada (% ao ano)</label><input type="number" min="0" step="0.1" value="{{ form.prevRentabilidade }}" onChange="{{ on_prevRentabilidade }}" placeholder="Ex: 8"></div>
+        <div><label class="fld">Em quantos anos pretende resgatar?</label><input type="number" min="0" value="{{ form.prevResgateAnos }}" onChange="{{ on_prevResgateAnos }}" placeholder="Ex: 20"></div>
+      </div>
+    </sc-if>
+  </div>
+
+  <button onClick="{{ verDiagnostico }}" style="display:block;width:100%;text-align:center;background:#e8a13c;color:#234f36;font:800 16px/1 'Archivo',sans-serif;padding:18px;border:none;border-radius:12px;cursor:pointer;margin-top:8px">Ver meu diagnóstico completo →</button>
+  <sc-if value="{{ showValidation }}" hint-placeholder-val="{{ false }}">
+    <div style="text-align:center;color:#c47d23;font:600 13px/1.4 'Archivo',sans-serif;margin-top:10px">Preencha ao menos sexo, idade, renda e gastos fixos pra calcular.</div>
+  </sc-if>
+
+  <sc-if value="{{ showReport }}" hint-placeholder-val="{{ false }}">
+    <div style="margin-top:40px">
+      <div style="background:#234f36;border-radius:22px;padding:clamp(28px,4vw,40px);margin-bottom:18px;color:#fff">
+        <div style="font:700 11px/1 'Archivo',sans-serif;letter-spacing:.14em;text-transform:uppercase;color:#9cc6a6;margin-bottom:14px">Seu diagnóstico</div>
+        <h3 style="font-family:'Spectral',serif;font-weight:600;font-size:26px;margin:0 0 8px">{{ diagTitle }}</h3>
+        <p style="font:400 15px/1.6 'Archivo',sans-serif;color:#cfe4d3;margin:0">{{ diagIntro }}</p>
+      </div>
+
+      <div class="sec">
+        <div style="font:700 11px/1 'Archivo',sans-serif;letter-spacing:.1em;text-transform:uppercase;color:#8a7f6a;margin-bottom:10px">🏠 Moradia e gastos fixos</div>
+        <p style="font:400 15px/1.6 'Archivo',sans-serif;color:#3f3a33">{{ msgFixos }}</p>
+      </div>
+
+      <sc-if value="{{ showTurnaround }}" hint-placeholder-val="{{ false }}">
+        <div class="sec" style="border-color:#e8a13c;border-width:2px">
+          <div style="font:700 11px/1 'Archivo',sans-serif;letter-spacing:.1em;text-transform:uppercase;color:#c47d23;margin-bottom:10px">🚨 Modo turnaround — você está no vermelho</div>
+          <p style="font:400 15px/1.6 'Archivo',sans-serif;color:#3f3a33">{{ msgTurnaround }}</p>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ showJuros }}" hint-placeholder-val="{{ false }}">
+        <div class="sec">
+          <div style="font:700 11px/1 'Archivo',sans-serif;letter-spacing:.1em;text-transform:uppercase;color:#8a7f6a;margin-bottom:10px">💳 Dívidas com juros</div>
+          <p style="font:400 15px/1.6 'Archivo',sans-serif;color:#3f3a33">{{ msgJuros }}</p>
+        </div>
+      </sc-if>
+
+      <div class="sec">
+        <div style="font:700 11px/1 'Archivo',sans-serif;letter-spacing:.1em;text-transform:uppercase;color:#8a7f6a;margin-bottom:10px">🛟 Reserva de emergência</div>
+        <p style="font:400 15px/1.6 'Archivo',sans-serif;color:#3f3a33">{{ msgReserva }}</p>
+      </div>
+
+      <div class="sec">
+        <div style="font:700 11px/1 'Archivo',sans-serif;letter-spacing:.1em;text-transform:uppercase;color:#8a7f6a;margin-bottom:10px">🏦 Patrimônio × dívida</div>
+        <p style="font:400 15px/1.6 'Archivo',sans-serif;color:#3f3a33">{{ msgPatrimonio }}</p>
+      </div>
+
+      <sc-if value="{{ showFaculdadeAlerta }}" hint-placeholder-val="{{ false }}">
+        <div class="sec">
+          <div style="font:700 11px/1 'Archivo',sans-serif;letter-spacing:.1em;text-transform:uppercase;color:#8a7f6a;margin-bottom:10px">🎓 Faculdade dos dependentes</div>
+          <p style="font:400 15px/1.6 'Archivo',sans-serif;color:#3f3a33">{{ msgFaculdade }}</p>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ showSeguroAlerta }}" hint-placeholder-val="{{ false }}">
+        <div class="sec">
+          <div style="font:700 11px/1 'Archivo',sans-serif;letter-spacing:.1em;text-transform:uppercase;color:#8a7f6a;margin-bottom:10px">🛡️ Proteção</div>
+          <p style="font:400 15px/1.6 'Archivo',sans-serif;color:#3f3a33">{{ msgSeguro }}</p>
+        </div>
+      </sc-if>
+
+      <div class="sec">
+        <div style="font:700 11px/1 'Archivo',sans-serif;letter-spacing:.1em;text-transform:uppercase;color:#8a7f6a;margin-bottom:10px">👴 Aposentadoria (INSS)</div>
+        <p style="font:400 15px/1.6 'Archivo',sans-serif;color:#3f3a33">{{ msgInss }}</p>
+      </div>
+
+      <sc-if value="{{ showPrevidenciaResultado }}" hint-placeholder-val="{{ false }}">
+        <div class="sec">
+          <div style="font:700 11px/1 'Archivo',sans-serif;letter-spacing:.1em;text-transform:uppercase;color:#8a7f6a;margin-bottom:10px">📈 Previdência privada</div>
+          <p style="font:400 15px/1.6 'Archivo',sans-serif;color:#3f3a33">{{ msgPrevidencia }}</p>
+        </div>
+      </sc-if>
+
+      <p style="font:400 12.5px/1.5 'Archivo',sans-serif;color:#9a9183;margin:18px 0 26px">Estimativas simplificadas com base nos dados informados — não substituem o simulador oficial do Meu INSS nem uma consultoria financeira ou previdenciária individualizada.</p>
+
+      <a href="index.html" style="display:block;text-align:center;background:#2f6b47;color:#fff;font:700 16px/1 'Archivo',sans-serif;padding:17px;border-radius:12px;text-decoration:none">Quero meu plano de ação de 30 dias →</a>
+    </div>
+  </sc-if>
+
+</section>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+function n(v) { const x = parseFloat(v); return isNaN(x) ? 0 : x; }
+function brl(v) { return v.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }); }
+
+class Component extends DCLogic {
+  state = {
+    form: {},
+    reportRequested: false,
+  };
+
+  setField = (key, e) => {
+    this.setState(s => ({ form: { ...s.form, [key]: e.target.value } }));
+  };
+
+  verDiagnostico = () => {
+    this.setState({ reportRequested: true });
+  };
+
+  renderVals() {
+    const f = this.state.form;
+    const sexo = f.sexo || '';
+    const idade = n(f.idade);
+    const renda = n(f.rendaLiquida);
+    const gastosFixos = n(f.gastosFixos);
+    const sobraMes = f.sobraMes === undefined || f.sobraMes === '' ? null : n(f.sobraMes);
+    const temDividaJuros = f.temDividaJuros || '';
+    const dividaTotal = n(f.dividaTotal);
+    const taxaJuros = n(f.taxaJuros);
+    const reservaAtual = n(f.reservaAtual);
+    const patrimonio = n(f.patrimonio);
+    const dependentes = n(f.dependentes);
+    const dependenteFaculdade = f.dependenteFaculdade || '';
+    const seguro = f.seguro || '';
+    const tempoContribuicao = n(f.tempoContribuicao);
+    const temPrevidencia = f.temPrevidencia || '';
+    const prevContribEmpresa = f.prevContribEmpresa || '';
+    const prevValorAtual = n(f.prevValorAtual);
+    const prevRentabilidade = n(f.prevRentabilidade);
+    const prevResgateAnos = n(f.prevResgateAnos);
+    const tipoRenda = f.tipoRenda || '';
+    const estabilidade = f.estabilidade || '';
+
+    const minRequired = sexo && idade > 0 && renda > 0 && f.gastosFixos !== undefined && f.gastosFixos !== '';
+    const showReport = this.state.reportRequested && minRequired;
+    const showValidation = this.state.reportRequested && !minRequired;
+
+    // --- Fixos ---
+    const pctFixos = renda > 0 ? (gastosFixos / renda) * 100 : 0;
+    const msgFixos = renda > 0
+      ? (pctFixos > 50
+        ? `Seus gastos fixos consomem ${pctFixos.toFixed(0)}% da sua renda — acima do teto saudável de 50%. Vale considerar reduzir custo de moradia (ex: um aluguel mais baixo) ou renegociar parcelas.`
+        : `Seus gastos fixos consomem ${pctFixos.toFixed(0)}% da sua renda — dentro da faixa saudável (até 50%). Sobra espaço pra reserva e investimento.`)
+      : 'Informe sua renda e gastos fixos pra calcular.';
+
+    // --- Turnaround ---
+    const showTurnaround = sobraMes !== null && sobraMes < 0;
+    let msgTurnaround = '';
+    if (showTurnaround) {
+      const passos = [];
+      if (temDividaJuros === 'sim') passos.push('1) renegocie a dívida com juros altos primeiro (ela cresce mais rápido que qualquer corte)');
+      passos.push(`${passos.length + 1}) corte os vazamentos invisíveis (gastos pequenos e recorrentes)`);
+      passos.push(`${passos.length + 1}) busque uma renda extra temporária (freela, venda de itens parados) até equilibrar`);
+      msgTurnaround = `Você está gastando R$ ${brl(Math.abs(sobraMes))} a mais do que ganha por mês. Ordem de prioridade: ${passos.join('; ')}.`;
+    }
+
+    // --- Juros ---
+    const showJuros = temDividaJuros === 'sim';
+    let msgJuros = '';
+    if (showJuros) {
+      const custoAnual = dividaTotal * (taxaJuros / 100) * 12;
+      const abusiva = taxaJuros > 8;
+      msgJuros = `Com saldo de R$ ${brl(dividaTotal)} a ${taxaJuros}% ao mês, os juros custam aproximadamente R$ ${brl(custoAnual)} por ano.${abusiva ? ' Essa taxa está acima de 8% a.m. — o teto legal do cheque especial e uma referência usada pela Justiça pra identificar juros abusivos. Considere renegociar ou portar essa dívida pra uma linha mais barata antes de qualquer investimento. Se a renegociação não der certo, considere consultar um defensor público pra questionar a dívida judicialmente.' : ' Taxa dentro de uma faixa administrável, mas ainda vale negociar condições melhores.'}`;
+    }
+
+    // --- Reserva ---
+    const idealMeses = (tipoRenda === 'variavel' || estabilidade === 'instavel') ? 9 : (estabilidade === 'moderada' ? 6 : 3);
+    const mesesAtuais = gastosFixos > 0 ? reservaAtual / gastosFixos : 0;
+    const faltaParaIdeal = Math.max(0, idealMeses * gastosFixos - reservaAtual);
+    const sugestaoMensal = faltaParaIdeal / 12;
+    const msgReserva = gastosFixos > 0
+      ? `Sua reserva cobre ${mesesAtuais.toFixed(1).replace('.', ',')} meses de gastos fixos. O ideal pro seu perfil é ${idealMeses} meses.${faltaParaIdeal > 0 ? ` Faltam R$ ${brl(faltaParaIdeal)} — guardando R$ ${brl(sugestaoMensal)}/mês, você chega lá em 12 meses.` : ' Você já atingiu (ou superou) a meta — parabéns, hora de fazer esse dinheiro render mais.'}`
+      : 'Informe seus gastos fixos pra calcular sua meta de reserva.';
+
+    // --- Patrimônio × dívida ---
+    let msgPatrimonio;
+    if (patrimonio > 0) {
+      const ratio = (dividaTotal / patrimonio) * 100;
+      msgPatrimonio = `Sua dívida total representa ${ratio.toFixed(0)}% do seu patrimônio.${ratio > 50 ? ' Está alto — priorize quitar antes de acumular mais patrimônio.' : ' Uma proporção saudável.'}`;
+    } else if (dividaTotal > 0) {
+      msgPatrimonio = `Você tem R$ ${brl(dividaTotal)} em dívidas e ainda nenhum patrimônio construído — foco total em quitar antes de investir em bens.`;
+    } else {
+      msgPatrimonio = 'Sem dívidas e sem patrimônio informado ainda — bom momento pra começar a construir com o que sobra no fim do mês.';
+    }
+
+    // --- Faculdade ---
+    const showFaculdadeAlerta = dependentes > 0 && dependenteFaculdade === 'sim_sem_plano';
+    const msgFaculdade = showFaculdadeAlerta
+      ? 'Você tem dependente(s) a caminho da faculdade sem plano de custeio definido. As opções realistas são: mirar em faculdade pública (Enem/vestibular), buscar bolsa ou financiamento estudantil (atenção: financiamento vira dívida) — ou começar já a buscar uma renda extra dedicada e devidamente reservada a esse objetivo.'
+      : '';
+
+    // --- Seguro ---
+    const showSeguroAlerta = seguro === 'nenhum';
+    const msgSeguro = showSeguroAlerta
+      ? 'Você não tem seguro de vida nem de saúde. Isso deixa seu patrimônio e sua família expostos a um evento único (doença grave, acidente) que pode zerar qualquer reserva construída. Vale pesquisar um seguro básico compatível com seu orçamento.'
+      : '';
+
+    // --- INSS ---
+    let msgInss = 'Informe sexo, idade e tempo de contribuição pra estimar.';
+    if (sexo && idade > 0) {
+      const minIdade = sexo === 'M' ? 65 : 62;
+      const minTempo = sexo === 'M' ? 20 : 15;
+      const anosFaltaIdade = Math.max(0, minIdade - idade);
+      const anosFaltaTempo = Math.max(0, minTempo - tempoContribuicao);
+      const anosFaltam = Math.max(anosFaltaIdade, anosFaltaTempo);
+      const tempoNaAposentadoria = tempoContribuicao + anosFaltam;
+      const anosExcedentes = Math.max(0, tempoNaAposentadoria - minTempo);
+      const mediaSalarial = renda;
+      let beneficio = mediaSalarial * (0.6 + 0.02 * anosExcedentes);
+      beneficio = Math.max(1621, Math.min(8475.55, beneficio));
+      msgInss = `Pela regra geral (${sexo === 'M' ? '65 anos + 20 anos de contribuição' : '62 anos + 15 anos de contribuição'}), faltam cerca de ${anosFaltam.toFixed(0)} ano(s) pra você se aposentar. Com base na sua renda atual como proxy da média salarial, o benefício estimado ficaria em torno de R$ ${brl(beneficio)}/mês (piso R$ 1.621,00, teto R$ 8.475,55 em 2026). Confirme no simulador oficial do Meu INSS (meu.inss.gov.br) — regras de transição por pontos ou pedágio podem valer mais no seu caso.`;
+    }
+
+    // --- Previdência privada ---
+    const showPrevidenciaResultado = temPrevidencia === 'sim';
+    let msgPrevidencia = '';
+    if (showPrevidenciaResultado) {
+      const valorFuturo = prevValorAtual * Math.pow(1 + prevRentabilidade / 100, prevResgateAnos);
+      msgPrevidencia = `Com R$ ${brl(prevValorAtual)} hoje, rentabilidade de ${prevRentabilidade}% a.a.${prevContribEmpresa === 'sim' ? ' (com contribuição da empresa, o que acelera o acúmulo)' : ''}, em ${prevResgateAnos} anos você deve ter aproximadamente R$ ${brl(valorFuturo)} acumulados — um complemento importante à aposentadoria do INSS.`;
+    }
+
+    // --- Diagnóstico geral ---
+    let score = 0, maxScore = 0;
+    if (renda > 0) { maxScore++; if (pctFixos <= 50) score++; }
+    if (sobraMes !== null) { maxScore++; if (sobraMes >= 0) score++; }
+    maxScore++; if (mesesAtuais >= idealMeses) score++;
+    maxScore++; if (temDividaJuros !== 'sim') score++;
+    maxScore++; if (seguro !== 'nenhum') score++;
+    const pct = maxScore > 0 ? score / maxScore : 0;
+    const diagTitle = pct >= 0.75 ? 'No controle' : pct >= 0.4 ? 'Em construção' : 'Alerta vermelho';
+    const diagIntro = pct >= 0.75
+      ? 'Sua base está sólida. Os ajustes daqui pra frente são de otimização, não de sobrevivência.'
+      : pct >= 0.4
+      ? 'Você tem consciência, mas ainda falta estrutura em alguns pontos — o plano de ação vai fechar essas lacunas.'
+      : 'Seu dinheiro está pedindo socorro em mais de uma frente. Comece pelo turnaround antes de qualquer outra coisa.';
+
+    return {
+      form: f,
+      on_sexo: (e) => this.setField('sexo', e),
+      on_idade: (e) => this.setField('idade', e),
+      on_rendaLiquida: (e) => this.setField('rendaLiquida', e),
+      on_tipoRenda: (e) => this.setField('tipoRenda', e),
+      on_estabilidade: (e) => this.setField('estabilidade', e),
+      on_gastosFixos: (e) => this.setField('gastosFixos', e),
+      on_sobraMes: (e) => this.setField('sobraMes', e),
+      on_temDividaJuros: (e) => this.setField('temDividaJuros', e),
+      on_dividaTotal: (e) => this.setField('dividaTotal', e),
+      on_taxaJuros: (e) => this.setField('taxaJuros', e),
+      on_reservaAtual: (e) => this.setField('reservaAtual', e),
+      on_patrimonio: (e) => this.setField('patrimonio', e),
+      on_dependentes: (e) => this.setField('dependentes', e),
+      on_unicoResponsavel: (e) => this.setField('unicoResponsavel', e),
+      on_dependenteFaculdade: (e) => this.setField('dependenteFaculdade', e),
+      on_seguro: (e) => this.setField('seguro', e),
+      on_tempoContribuicao: (e) => this.setField('tempoContribuicao', e),
+      on_temPrevidencia: (e) => this.setField('temPrevidencia', e),
+      on_prevContribEmpresa: (e) => this.setField('prevContribEmpresa', e),
+      on_prevValorAtual: (e) => this.setField('prevValorAtual', e),
+      on_prevRentabilidade: (e) => this.setField('prevRentabilidade', e),
+      on_prevResgateAnos: (e) => this.setField('prevResgateAnos', e),
+      verDiagnostico: this.verDiagnostico,
+      showTaxa: temDividaJuros === 'sim',
+      showFaculdade: dependentes > 0,
+      showPrevidencia: temPrevidencia === 'sim',
+      showValidation,
+      showReport,
+      diagTitle,
+      diagIntro,
+      msgFixos,
+      showTurnaround,
+      msgTurnaround,
+      showJuros,
+      msgJuros,
+      msgReserva,
+      msgPatrimonio,
+      showFaculdadeAlerta,
+      msgFaculdade,
+      showSeguroAlerta,
+      msgSeguro,
+      msgInss,
+      showPrevidenciaResultado,
+      msgPrevidencia,
+    };
+  }
+}
+
+</script>
+</body>
+</html>
