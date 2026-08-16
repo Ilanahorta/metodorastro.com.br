@@ -72,12 +72,19 @@ a{color:#2f6b47}a:hover{color:#234f36}
   <!-- MÊS -->
   <div class="sec">
     <div class="sec-title">Mês de referência</div>
-    <select id="mes-ref" class="inp" style="max-width:220px">
-      <option>Janeiro 2026</option><option>Fevereiro 2026</option><option>Março 2026</option>
-      <option>Abril 2026</option><option>Maio 2026</option><option>Junho 2026</option>
-      <option selected>Julho 2026</option><option>Agosto 2026</option><option>Setembro 2026</option>
-      <option>Outubro 2026</option><option>Novembro 2026</option><option>Dezembro 2026</option>
-    </select>
+    <select id="mes-ref" class="inp" style="max-width:220px"></select>
+    <script>
+    (function(){
+      var M=['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
+      var sel=document.getElementById('mes-ref'), d=new Date();
+      for(var i=-2;i<=9;i++){
+        var t=new Date(d.getFullYear(),d.getMonth()+i,1), o=document.createElement('option');
+        o.textContent=M[t.getMonth()]+' '+t.getFullYear();
+        if(i===0)o.selected=true;
+        sel.appendChild(o);
+      }
+    })();
+    </script>
   </div>
 
   <!-- RENDA -->
@@ -136,9 +143,9 @@ a{color:#2f6b47}a:hover{color:#234f36}
   <div style="background:linear-gradient(135deg,#1a3d29,#255339);border-radius:16px;padding:clamp(24px,3vw,32px);margin-bottom:18px;color:#fff;display:flex;gap:clamp(16px,3vw,28px);align-items:center;flex-wrap:wrap">
     <div style="flex:1;min-width:240px">
       <div style="font:700 10px/1 'Archivo',sans-serif;letter-spacing:.2em;text-transform:uppercase;color:#e8a13c;margin-bottom:10px">Método R.A.S.T.R.O.</div>
-      <div style="font-family:'Spectral',serif;font-weight:600;font-size:clamp(20px,2.5vw,26px);line-height:1.15;margin-bottom:10px">Quer dominar seu dinheiro de verdade?</div>
+      <div style="font-family:'Spectral',serif;font-weight:600;font-size:clamp(20px,2.5vw,26px);line-height:1.15;margin-bottom:10px">Onde isto entra no livro</div>
       <p style="font:400 14px/1.55 'Archivo',sans-serif;color:rgba(255,255,255,.8);margin:0 0 18px">O livro ensina os 6 passos completos para organizar suas finanças, sair das dívidas e fazer o dinheiro sobrar todo mês.</p>
-      <a href="https://pay.hotmart.com/W106793169N" target="_blank" style="display:inline-block;background:#e8a13c;color:#1a3d29;font:700 15px/1 'Archivo',sans-serif;padding:14px 24px;border-radius:999px;text-decoration:none">Quero o livro por R$ 59 →</a>
+      
     </div>
     <div style="flex-shrink:0;width:140px;height:180px;background:rgba(255,255,255,.08);border-radius:12px;display:flex;align-items:center;justify-content:center;overflow:hidden">
       <img src="capa-final-produto.png" alt="Capa R.A.S.T.R.O." style="height:100%;object-fit:cover;border-radius:8px">
