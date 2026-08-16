@@ -1,85 +1,424 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="robots" content="noindex,nofollow,noarchive">
-<title>Suas ferramentas · R.A.S.T.R.O.</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,600;0,700;1,400&family=Archivo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<style>
-  *{box-sizing:border-box}
-  body{margin:0;background:#f7f4ee;color:#2A2521;-webkit-font-smoothing:antialiased}
-  a{text-decoration:none}
-  .card{transition:transform .16s ease, box-shadow .16s ease}
-  .card:hover{transform:translateY(-3px);box-shadow:0 26px 50px -28px rgba(15,36,25,.55)}
-</style>
+<script src="./support.js"></script>
 </head>
 <body>
+<x-dc>
+<helmet>
+<title>R.A.S.T.R.O - Para onde foi o meu dinheiro? | Ilana Horta</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Archivo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:#f7f4ee;color:#2A2521;font-family:'Archivo',sans-serif;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+img{display:block;max-width:100%}
+a{color:#255339;text-decoration:none}
+a:hover{color:#1a3d29}
+::selection{background:#255339;color:#f7f4ee}
+.lead-fields input::placeholder{color:rgba(255,255,255,.65)}
+@keyframes drip{0%{transform:translateY(0);opacity:0}15%{opacity:.9}60%{opacity:.9}100%{transform:translateY(14px);opacity:0}}
+@keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+.navlink:hover{color:#255339}
+.tool-card{transition:transform .18s ease,box-shadow .18s ease,border-color .18s ease}
+.tool-card:hover{transform:translateY(-3px);box-shadow:0 20px 40px -28px rgba(42,37,33,.4);border-color:rgba(47,107,71,.35)}
+.star-card{transition:transform .18s ease,box-shadow .18s ease}
+.star-card:hover{transform:translateY(-3px)}
+@media(max-width:900px){
+  nav .navlink{display:none}
+  .hero-grid,.two-col,.rastro-grid,.tools-grid,.checkup-grid,.lead-fields{grid-template-columns:1fr!important}
+  .star-card{grid-template-columns:1fr!important}
+  .checkup-grid > div:last-child{position:static!important}
+  .footer-row{flex-direction:column;text-align:center}
+}
+@media(max-width:640px){
+  .rastro-grid,.tools-grid{grid-template-columns:1fr!important}
+}
+</style>
+</helmet>
 
-<header style="background:#0f2419;padding:clamp(38px,6vw,68px) clamp(20px,5vw,64px) clamp(44px,6vw,72px)">
-  <div style="max-width:960px;margin:0 auto">
-    <div style="display:inline-flex;align-items:center;gap:8px;font:700 10.5px/1 'Archivo',sans-serif;letter-spacing:.18em;text-transform:uppercase;color:#0f2419;background:#bfe0c4;padding:7px 13px;border-radius:999px;margin-bottom:22px">
-      <span>Área de quem comprou o livro</span>
+<div style="overflow-x:hidden">
+
+<nav style="position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:0 clamp(20px,4vw,52px);height:62px;background:rgba(247,244,238,.9);backdrop-filter:blur(12px);border-bottom:1px solid rgba(42,37,33,.08)">
+  <a href="#topo" style="display:flex;align-items:baseline;gap:9px;color:#2A2521">
+    <span style="font-family:'Spectral',serif;font-weight:600;font-size:19px;letter-spacing:-.01em">R.A.S.T.R.O.</span>
+  </a>
+  <div style="display:flex;align-items:center;gap:clamp(14px,2.4vw,32px)">
+    <a href="#metodo" style="font:500 13.5px/1 'Archivo',sans-serif;color:#6b6256" class="navlink">O método</a>
+    <a href="#ferramentas" style="font:500 13.5px/1 'Archivo',sans-serif;color:#6b6256" class="navlink">Quiz grátis</a>
+    <a href="#livro" style="font:500 13.5px/1 'Archivo',sans-serif;color:#6b6256" class="navlink">O livro</a>
+    <a href="https://pay.hotmart.com/W106793169N" target="_blank" style="background:#e8a13c;color:#1a3d29;font:700 15.5px/1 'Archivo',sans-serif;padding:13px 24px;border-radius:999px;white-space:nowrap;box-shadow:0 2px 8px rgba(232,161,60,.35)">Quero o livro →</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="topo" style="margin-top:62px;padding:clamp(56px,8vw,104px) clamp(20px,5vw,64px) clamp(60px,7vw,96px);background:#1a3d29">
+  <div style="max-width:1180px;margin:0 auto;display:grid;grid-template-columns:1.08fr .92fr;gap:clamp(36px,5vw,72px);align-items:center" class="hero-grid">
+    <div>
+      <div style="display:inline-flex;align-items:center;gap:9px;font:600 13.2px/1 'Archivo',sans-serif;letter-spacing:.18em;text-transform:uppercase;color:#fff;background:rgba(255,255,255,.08);padding:8px 14px;border-radius:999px;margin-bottom:26px">
+        <span style="width:6px;height:6px;border-radius:50%;background:#e8a13c"></span>Raio-X · sem enrolação
+      </div>
+      <h1 style="font-family:'Spectral',serif;font-weight:600;font-size:clamp(40px,6.4vw,76px);line-height:1.02;letter-spacing:-.02em;margin-bottom:22px;color:#fff"><span style="font-size:.75em">R.A.S.T.R.O. -</span> Para onde foi<br>o meu <span style="font-style:italic;color:#e8a13c">dinheiro?</span></h1>
+      <p style="font:400 clamp(17px,1.5vw,20px)/1.6 'Archivo',sans-serif;color:#fff;max-width:520px;margin-bottom:14px">Você trabalha, recebe e, no fim do mês, o dinheiro simplesmente <strong style="color:#fff;font-weight:600">some</strong>. Não é falta de esforço. São os <strong style="color:#e8a13c;font-weight:600">vazamentos invisíveis</strong>.</p>
+      <p style="font:400 clamp(15px,1.3vw,17px)/1.6 'Archivo',sans-serif;color:#fff;max-width:500px;margin-bottom:34px">Em 1 minuto você descobre como gasta e por onde ele está escapando — sem abrir extrato, sem digitar números.</p>
+      <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:26px;align-items:center">
+        <a href="quiz.html" style="background:#e8a13c;color:#1a3d29;font:800 14.5px/1 'Archivo',sans-serif;padding:16px 22px;border-radius:999px;white-space:nowrap">Fazer o quiz agora, grátis →</a>
+        <a href="https://pay.hotmart.com/W106793169N" target="_blank" style="background:rgba(255,255,255,.1);color:#fff;font:600 14.5px/1 'Archivo',sans-serif;padding:16px 22px;border-radius:999px;white-space:nowrap;border:1px solid rgba(255,255,255,.25)">Conhecer o livro</a>
+      </div>
+      <div style="display:flex;align-items:center;gap:16px;font:500 12.5px/1.4 'Archivo',sans-serif;color:#fff;flex-wrap:wrap">
+        <span style="display:flex;align-items:center;gap:6px"><span style="color:#e8a13c;font-size:15px">✓</span> Quiz gratuito</span>
+        <span style="width:1px;height:14px;background:rgba(255,255,255,.18)"></span>
+        <span style="display:flex;align-items:center;gap:6px"><span style="color:#e8a13c;font-size:15px">✓</span> Resultado na hora</span>
+        <span style="width:1px;height:14px;background:rgba(255,255,255,.18)"></span>
+        <span style="display:flex;align-items:center;gap:6px"><span style="color:#e8a13c;font-size:15px">✓</span> Por quem viveu isso em Deloitte, GE, Uber e Google</span>
+      </div>
     </div>
-    <h1 style="font-family:'Spectral',serif;font-weight:600;font-size:clamp(32px,5.4vw,56px);line-height:1.05;letter-spacing:-.015em;margin:0 0 16px;color:#fff">Suas quatro ferramentas</h1>
-    <p style="font:400 clamp(16px,1.6vw,19px)/1.6 'Archivo',sans-serif;color:#eaf1ea;max-width:620px;margin:0">Elas fazem as contas que os exercícios do livro pedem. Não precisa instalar nada, não precisa criar conta — é só abrir e usar quantas vezes quiser.</p>
+
+    <!-- extrato mock -->
+    <div style="position:relative">
+      <div style="position:absolute;inset:-16px -16px 24px;background:linear-gradient(160deg,#e4efe1,transparent 60%);border-radius:28px;filter:blur(2px);opacity:.7"></div>
+      <div style="position:relative;background:#ffffff;border:1px solid rgba(42,37,33,.09);border-radius:20px;box-shadow:0 30px 60px -30px rgba(42,37,33,.28);padding:26px 24px 22px;animation:floaty 6s ease-in-out infinite">
+        <div style="display:flex;justify-content:space-between;align-items:center;padding-bottom:14px;border-bottom:1px solid rgba(42,37,33,.08);margin-bottom:12px">
+          <span style="font:700 12px/1 'Archivo',sans-serif;letter-spacing:.14em;text-transform:uppercase;color:#8a7f6a">Extrato · Outubro</span>
+          <span style="font:600 11px/1 'Archivo',sans-serif;color:#255339;background:#e4efe1;padding:5px 9px;border-radius:6px">o extrato não mente</span>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:2px">
+          <div class="row-leak" style="display:flex;justify-content:space-between;align-items:center;padding:9px 10px;border-radius:8px;background:#f4f8f1"><span style="font:500 13.5px/1 'Archivo',sans-serif;color:#2A2521">☕ Cafeteria</span><span style="font:600 13.5px/1 'Archivo',sans-serif;color:#255339">R$ 14,00</span></div>
+          <div class="row-leak" style="display:flex;justify-content:space-between;align-items:center;padding:9px 10px;border-radius:8px;background:#f4f8f1"><span style="font:500 13.5px/1 'Archivo',sans-serif;color:#2A2521">🛵 iFood</span><span style="font:600 13.5px/1 'Archivo',sans-serif;color:#255339">R$ 38,90</span></div>
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:9px 10px"><span style="font:500 13.5px/1 'Archivo',sans-serif;color:#9a9183">🚗 Uber</span><span style="font:600 13.5px/1 'Archivo',sans-serif;color:#9a9183">R$ 21,50</span></div>
+          <div class="row-leak" style="display:flex;justify-content:space-between;align-items:center;padding:9px 10px;border-radius:8px;background:#f4f8f1"><span style="font:500 13.5px/1 'Archivo',sans-serif;color:#2A2521">📱 Assinatura</span><span style="font:600 13.5px/1 'Archivo',sans-serif;color:#255339">R$ 27,90</span></div>
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:9px 10px"><span style="font:500 13.5px/1 'Archivo',sans-serif;color:#9a9183">＋ 43 comprinhas de menos de R$ 100…</span></div>
+        </div>
+        <div style="margin-top:14px;padding:16px 16px;background:#255339;border-radius:12px;position:relative;overflow:hidden">
+          <div style="position:absolute;top:8px;right:22px;width:8px;height:8px;border-radius:0 50% 50% 50%;background:#bfe0c4;transform:rotate(45deg);animation:drip 2.6s ease-in infinite"></div>
+          <div style="font:600 10px/1 'Archivo',sans-serif;letter-spacing:.14em;text-transform:uppercase;color:#fff;margin-bottom:6px">Total em comprinhas no mês</div>
+          <div style="font-family:'Archivo',sans-serif;font-weight:800;font-size:34px;color:#fff;line-height:1" data-countup="1184.37">R$ 1.184,37</div>
+        </div>
+      </div>
+    </div>
   </div>
-</header>
+</section>
 
-<main style="max-width:960px;margin:0 auto;padding:clamp(28px,4vw,44px) clamp(20px,5vw,64px) clamp(50px,7vw,80px)">
+<!-- VAZAMENTOS EXPLAINER -->
+<section style="background:#1a3d29;color:#eaf1ea;padding:clamp(54px,7vw,88px) clamp(20px,5vw,64px)">
+  <div style="max-width:900px;margin:0 auto;text-align:center">
+    <div style="font:600 11px/1 'Archivo',sans-serif;letter-spacing:.22em;text-transform:uppercase;color:#fff;margin-bottom:24px">Uma história real deste livro</div>
+    <p style="font:400 clamp(19px,2.4vw,27px)/1.5 'Archivo',sans-serif;color:#eaf1ea;max-width:720px;margin:0 auto 8px">A Patrícia jurava que gastava, no máximo, <strong style="color:#fff;font-weight:600">R$ 300</strong> por mês em “comprinhas”.<br>A gente pegou a calculadora e somou. Deu isto:</p>
+    <div style="font-family:'Spectral',serif;font-weight:700;font-size:clamp(56px,11vw,120px);line-height:1;color:#fff;margin:24px 0 18px;letter-spacing:-.02em">R$ 1.184,37</div>
+    <p style="font-family:'Spectral',serif;font-style:italic;font-size:clamp(18px,2vw,24px);color:#fff;max-width:600px;margin:0 auto 30px">“Você não perde dinheiro de uma vez só. Você perde aos poucos, em gastos tão pequenos que nem doem — até virarem uma montanha.”</p>
+    <p style="font:400 16px/1.6 'Archivo',sans-serif;color:#fff;max-width:520px;margin:0 auto 28px">Numa pesquisa americana (C+R Research), 42% das pessoas descobriram que pagavam por uma assinatura que nem lembravam ter. E você — tem ideia de como <em style="color:#fff;font-style:italic">você</em> gasta?</p>
+    <a href="quiz.html" style="display:inline-block;background:#f7f4ee;color:#1a3d29;font:700 15px/1 'Archivo',sans-serif;padding:16px 28px;border-radius:999px">Descobrir o meu perfil →</a>
+  </div>
+</section>
 
-  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:16px">
+<!-- ANTES / DEPOIS -->
+<section style="padding:clamp(56px,7vw,92px) clamp(20px,5vw,64px);background:#f7f4ee">
+  <div style="max-width:980px;margin:0 auto">
+    <div style="text-align:center;max-width:640px;margin:0 auto clamp(36px,4vw,48px)">
+      <div style="font:600 11px/1 'Archivo',sans-serif;letter-spacing:.2em;text-transform:uppercase;color:#255339;margin-bottom:16px">A diferença que o método faz</div>
+      <h2 style="font-family:'Spectral',serif;font-weight:600;font-size:clamp(28px,3.8vw,48px);line-height:1.08;letter-spacing:-.01em">Antes e depois do R.A.S.T.R.O.</h2>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px" class="two-col">
+      <div style="background:#fff;border:1px solid rgba(42,37,33,.1);border-radius:18px;padding:clamp(26px,3vw,34px)">
+        <div style="font:700 10.5px/1 'Archivo',sans-serif;letter-spacing:.14em;text-transform:uppercase;color:#b3392f;margin-bottom:18px">Antes</div>
+        <div style="display:flex;flex-direction:column;gap:14px">
+          <div style="display:flex;gap:10px;align-items:flex-start"><span style="color:#b3392f;font-size:15px;line-height:1.5">✕</span><span style="font:400 15px/1.6 'Archivo',sans-serif;color:#5c554b">Dinheiro some e você não sabe pra onde foi</span></div>
+          <div style="display:flex;gap:10px;align-items:flex-start"><span style="color:#b3392f;font-size:15px;line-height:1.5">✕</span><span style="font:400 15px/1.6 'Archivo',sans-serif;color:#5c554b">Culpa e ansiedade toda vez que olha o extrato</span></div>
+          <div style="display:flex;gap:10px;align-items:flex-start"><span style="color:#b3392f;font-size:15px;line-height:1.5">✕</span><span style="font:400 15px/1.6 'Archivo',sans-serif;color:#5c554b">Dívidas que parecem não ter fim</span></div>
+          <div style="display:flex;gap:10px;align-items:flex-start"><span style="color:#b3392f;font-size:15px;line-height:1.5">✕</span><span style="font:400 15px/1.6 'Archivo',sans-serif;color:#5c554b">Zero reserva pra imprevistos</span></div>
+        </div>
+      </div>
+      <div style="background:#1a3d29;border-radius:18px;padding:clamp(26px,3vw,34px)">
+        <div style="font:700 10.5px/1 'Archivo',sans-serif;letter-spacing:.14em;text-transform:uppercase;color:#fff;margin-bottom:18px">Depois</div>
+        <div style="display:flex;flex-direction:column;gap:14px">
+          <div style="display:flex;gap:10px;align-items:flex-start"><span style="color:#e8a13c;font-size:15px;line-height:1.5">✓</span><span style="font:400 15px/1.6 'Archivo',sans-serif;color:#eaf1ea">Sabe exatamente pra onde vai cada real</span></div>
+          <div style="display:flex;gap:10px;align-items:flex-start"><span style="color:#e8a13c;font-size:15px;line-height:1.5">✓</span><span style="font:400 15px/1.6 'Archivo',sans-serif;color:#eaf1ea">Olha o extrato com calma, sem culpa</span></div>
+          <div style="display:flex;gap:10px;align-items:flex-start"><span style="color:#e8a13c;font-size:15px;line-height:1.5">✓</span><span style="font:400 15px/1.6 'Archivo',sans-serif;color:#eaf1ea">Segue um plano claro pra sair das dívidas</span></div>
+          <div style="display:flex;gap:10px;align-items:flex-start"><span style="color:#e8a13c;font-size:15px;line-height:1.5">✓</span><span style="font:400 15px/1.6 'Archivo',sans-serif;color:#eaf1ea">Já começou a construir sua reserva</span></div>
+        </div>
+      </div>
+    </div>
+    <div style="text-align:center;margin-top:clamp(28px,4vw,40px)">
+      <a href="https://pay.hotmart.com/W106793169N" target="_blank" style="display:inline-block;background:#255339;color:#fff;font:700 17px/1 'Archivo',sans-serif;padding:18px 32px;border-radius:999px">Quero o livro por R$ 59,09 →</a>
+    </div>
+  </div>
+</section>
 
-    <a href="indice-financeiro.html" class="card" style="display:block;background:#255339;border-radius:18px;padding:clamp(26px,3vw,34px);box-shadow:0 20px 40px -30px rgba(15,36,25,.6)">
-      <div style="font:700 10.5px/1 'Archivo',sans-serif;letter-spacing:.16em;text-transform:uppercase;color:#bfe0c4;margin-bottom:14px">Passo R · o raio-x</div>
-      <h2 style="font-family:'Spectral',serif;font-weight:600;font-size:26px;line-height:1.12;color:#fff;margin:0 0 10px">Índice Financeiro™</h2>
-      <p style="font:400 15px/1.6 'Archivo',sans-serif;color:#eaf1ea;margin:0 0 20px">Sua nota de 0 a 100, com diagnóstico de dívidas, reserva e aposentadoria. Responda e veja onde você está hoje.</p>
-      <span style="display:inline-block;background:#e8a13c;color:#1a3d29;font:800 13.5px/1 'Archivo',sans-serif;padding:13px 20px;border-radius:999px">Abrir ferramenta →</span>
+<!-- METODO RASTRO -->
+<section id="metodo" style="padding:clamp(60px,8vw,104px) clamp(20px,5vw,64px);background:#eef3ea">
+  <div style="max-width:1120px;margin:0 auto">
+    <div style="text-align:center;max-width:660px;margin:0 auto clamp(40px,5vw,58px)">
+      <div style="font:600 11px/1 'Archivo',sans-serif;letter-spacing:.2em;text-transform:uppercase;color:#255339;margin-bottom:16px">O método autoral</div>
+      <h2 style="font-family:'Spectral',serif;font-weight:600;font-size:clamp(30px,4.2vw,54px);line-height:1.06;letter-spacing:-.01em;margin-bottom:16px">Siga o <span style="color:#255339">R.A.S.T.R.O.</span> do seu dinheiro</h2>
+      <p style="font:400 17px/1.65 'Archivo',sans-serif;color:#5c554b">O dinheiro sempre deixa pistas. São seis passos, na ordem certa, pra sair do “sumiu tudo” para “eu sei exatamente onde está cada real”.</p>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px" class="rastro-grid">
+      <div style="background:#fff;border:1px solid rgba(42,37,33,.07);border-radius:16px;padding:28px 26px">
+        <div style="display:flex;align-items:baseline;gap:12px;margin-bottom:14px"><span style="font-family:'Spectral',serif;font-weight:700;font-size:46px;color:#255339;line-height:.8">R</span><span style="font:700 11px/1 'Archivo',sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#8a7f6a">Passo 1</span></div>
+        <h3 style="font-family:'Spectral',serif;font-weight:600;font-size:21px;margin-bottom:8px">Raio-X</h3>
+        <p style="font:400 14.5px/1.6 'Archivo',sans-serif;color:#5c554b">Descubra, sem culpa, o que realmente entra e sai todo mês.</p>
+      </div>
+      <div style="background:#fff;border:1px solid rgba(42,37,33,.07);border-radius:16px;padding:28px 26px">
+        <div style="display:flex;align-items:baseline;gap:12px;margin-bottom:14px"><span style="font-family:'Spectral',serif;font-weight:700;font-size:46px;color:#255339;line-height:.8">A</span><span style="font:700 11px/1 'Archivo',sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#8a7f6a">Passo 2</span></div>
+        <h3 style="font-family:'Spectral',serif;font-weight:600;font-size:21px;margin-bottom:8px">Ache os vazamentos</h3>
+        <p style="font:400 14.5px/1.6 'Archivo',sans-serif;color:#5c554b">Os gastos pequenos que, somados, drenam sua renda sem você ver.</p>
+      </div>
+      <div style="background:#fff;border:1px solid rgba(42,37,33,.07);border-radius:16px;padding:28px 26px">
+        <div style="display:flex;align-items:baseline;gap:12px;margin-bottom:14px"><span style="font-family:'Spectral',serif;font-weight:700;font-size:46px;color:#255339;line-height:.8">S</span><span style="font:700 11px/1 'Archivo',sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#8a7f6a">Passo 3</span></div>
+        <h3 style="font-family:'Spectral',serif;font-weight:600;font-size:21px;margin-bottom:8px">Separe</h3>
+        <p style="font:400 14.5px/1.6 'Archivo',sans-serif;color:#5c554b">O método 50/30/20 (referência didática, não uma regra fixa — varia caso a caso) pra organizar o dinheiro sem sofrer nem planilha complicada.</p>
+      </div>
+      <div style="background:#fff;border:1px solid rgba(42,37,33,.07);border-radius:16px;padding:28px 26px">
+        <div style="display:flex;align-items:baseline;gap:12px;margin-bottom:14px"><span style="font-family:'Spectral',serif;font-weight:700;font-size:46px;color:#255339;line-height:.8">T</span><span style="font:700 11px/1 'Archivo',sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#8a7f6a">Passo 4</span></div>
+        <h3 style="font-family:'Spectral',serif;font-weight:600;font-size:21px;margin-bottom:8px">Termine suas dívidas</h3>
+        <p style="font:400 14.5px/1.6 'Archivo',sans-serif;color:#5c554b">Bola de neve × avalanche: descubra qual estratégia te quita mais rápido.</p>
+      </div>
+      <div style="background:#fff;border:1px solid rgba(42,37,33,.07);border-radius:16px;padding:28px 26px">
+        <div style="display:flex;align-items:baseline;gap:12px;margin-bottom:14px"><span style="font-family:'Spectral',serif;font-weight:700;font-size:46px;color:#255339;line-height:.8">R</span><span style="font:700 11px/1 'Archivo',sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#8a7f6a">Passo 5</span></div>
+        <h3 style="font-family:'Spectral',serif;font-weight:600;font-size:21px;margin-bottom:8px">Reserva</h3>
+        <p style="font:400 14.5px/1.6 'Archivo',sans-serif;color:#5c554b">Seu colchão de emergência pra dormir tranquilo — quanto e como montar.</p>
+      </div>
+      <div style="background:#fff;border:1px solid rgba(42,37,33,.07);border-radius:16px;padding:28px 26px">
+        <div style="display:flex;align-items:baseline;gap:12px;margin-bottom:14px"><span style="font-family:'Spectral',serif;font-weight:700;font-size:46px;color:#255339;line-height:.8">O</span><span style="font:700 11px/1 'Archivo',sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#8a7f6a">Passo 6</span></div>
+        <h3 style="font-family:'Spectral',serif;font-weight:600;font-size:21px;margin-bottom:8px">Organize o futuro</h3>
+        <p style="font:400 14.5px/1.6 'Archivo',sans-serif;color:#5c554b">Faça o dinheiro que sobrou trabalhar por você, do jeito mais simples possível.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FERRAMENTAS -->
+<section id="ferramentas" style="padding:clamp(60px,8vw,104px) clamp(20px,5vw,64px);background:#f7f4ee">
+  <div style="max-width:1120px;margin:0 auto">
+    <div style="text-align:center;max-width:640px;margin:0 auto clamp(38px,5vw,54px)">
+      <div style="font:600 11px/1 'Archivo',sans-serif;letter-spacing:.2em;text-transform:uppercase;color:#255339;margin-bottom:16px">Comece agora · de graça</div>
+      <h2 style="font-family:'Spectral',serif;font-weight:600;font-size:clamp(30px,4.2vw,54px);line-height:1.06;letter-spacing:-.01em;margin-bottom:16px">O quiz é grátis</h2>
+      <p style="font:400 17px/1.65 'Archivo',sans-serif;color:#5c554b">Descubra em 1 minuto como você gasta e por onde o seu dinheiro escapa. As quatro ferramentas de cálculo vêm como bônus do livro.</p>
+    </div>
+
+    <!-- star -->
+    <a href="quiz.html" style="display:grid;grid-template-columns:1.3fr 1fr;gap:0;background:#255339;border-radius:22px;overflow:hidden;margin-bottom:16px;box-shadow:0 30px 60px -34px rgba(35,79,54,.6)" class="star-card">
+      <div style="padding:clamp(32px,4vw,48px)">
+        <div style="display:inline-flex;align-items:center;gap:7px;font:700 10.5px/1 'Archivo',sans-serif;letter-spacing:.14em;text-transform:uppercase;color:#1a3d29;background:#bfe0c4;padding:6px 11px;border-radius:999px;margin-bottom:20px">★ Comece por aqui</div>
+        <h3 style="font-family:'Spectral',serif;font-weight:600;font-size:clamp(26px,3vw,38px);color:#fff;line-height:1.08;margin-bottom:12px">Você conhece mesmo os seus gastos?</h3>
+        <p style="font:400 16px/1.65 'Archivo',sans-serif;color:#fff;margin-bottom:24px;max-width:420px">5 perguntas rápidas — sem abrir extrato, sem digitar números. Descubra o seu perfil de gasto e por onde o dinheiro está escapando.</p>
+        <span style="display:inline-block;background:#e8a13c;color:#1a3d29;font:800 14px/1 'Archivo',sans-serif;padding:14px 24px;border-radius:999px">Fazer o quiz agora, grátis →</span>
+      </div>
+      <div style="background:#1a3d29;display:flex;flex-direction:column;justify-content:center;gap:14px;padding:clamp(28px,3vw,40px)" class="star-side">
+        <div style="font:700 10.5px/1 'Archivo',sans-serif;letter-spacing:.14em;text-transform:uppercase;color:#bfe0c4;margin-bottom:2px">Qual é o seu?</div>
+        <div style="display:flex;align-items:center;gap:11px;background:rgba(255,255,255,.08);border-radius:10px;padding:12px 14px"><span style="font-size:19px;line-height:1">🔥</span><span style="font:600 13.5px/1.25 'Archivo',sans-serif;color:#fff">O Gastador Impulsivo</span></div>
+        <div style="display:flex;align-items:center;gap:11px;background:rgba(255,255,255,.08);border-radius:10px;padding:12px 14px"><span style="font-size:19px;line-height:1">🔍</span><span style="font:600 13.5px/1.25 'Archivo',sans-serif;color:#fff">O Gastador Quase Controlado</span></div>
+        <div style="display:flex;align-items:center;gap:11px;background:rgba(255,255,255,.08);border-radius:10px;padding:12px 14px"><span style="font-size:19px;line-height:1">🎭</span><span style="font:600 13.5px/1.25 'Archivo',sans-serif;color:#fff">O Gastador Emocional</span></div>
+        <div style="display:flex;align-items:center;gap:11px;background:rgba(255,255,255,.08);border-radius:10px;padding:12px 14px"><span style="font-size:19px;line-height:1">🌤️</span><span style="font:600 13.5px/1.25 'Archivo',sans-serif;color:#fff">O Gastador Despreocupado</span></div>
+      </div>
     </a>
 
-    <a href="detector.html" class="card" style="display:block;background:#255339;border-radius:18px;padding:clamp(26px,3vw,34px);box-shadow:0 20px 40px -30px rgba(15,36,25,.6)">
-      <div style="font:700 10.5px/1 'Archivo',sans-serif;letter-spacing:.16em;text-transform:uppercase;color:#bfe0c4;margin-bottom:14px">Passo A · ache os vazamentos</div>
-      <h2 style="font-family:'Spectral',serif;font-weight:600;font-size:26px;line-height:1.12;color:#fff;margin:0 0 10px">Detector de Vazamentos Invisíveis™</h2>
-      <p style="font:400 15px/1.6 'Archivo',sans-serif;color:#eaf1ea;margin:0 0 20px">Marque os gastinhos e veja na hora quanto viram por ano — e no que se transformariam se estivessem investidos.</p>
-      <span style="display:inline-block;background:#e8a13c;color:#1a3d29;font:800 13.5px/1 'Archivo',sans-serif;padding:13px 20px;border-radius:999px">Abrir ferramenta →</span>
-    </a>
-
-    <a href="orcamento.html" class="card" style="display:block;background:#fff;border:1px solid rgba(42,37,33,.09);border-radius:18px;padding:clamp(26px,3vw,34px);box-shadow:0 20px 40px -34px rgba(42,37,33,.5)">
-      <div style="font:700 10.5px/1 'Archivo',sans-serif;letter-spacing:.16em;text-transform:uppercase;color:#8a7f6a;margin-bottom:14px">Passo S · separe</div>
-      <h2 style="font-family:'Spectral',serif;font-weight:600;font-size:26px;line-height:1.12;color:#2A2521;margin:0 0 10px">Planilha de Orçamento</h2>
-      <p style="font:400 15px/1.6 'Archivo',sans-serif;color:#5c554b;margin:0 0 20px">O seu 50-30-20 montado em minutos, com os ajustes acontecendo na tela enquanto você preenche.</p>
-      <span style="display:inline-block;background:#255339;color:#fff;font:800 13.5px/1 'Archivo',sans-serif;padding:13px 20px;border-radius:999px">Abrir ferramenta →</span>
-    </a>
-
-    <a href="simulador.html" class="card" style="display:block;background:#fff;border:1px solid rgba(42,37,33,.09);border-radius:18px;padding:clamp(26px,3vw,34px);box-shadow:0 20px 40px -34px rgba(42,37,33,.5)">
-      <div style="font:700 10.5px/1 'Archivo',sans-serif;letter-spacing:.16em;text-transform:uppercase;color:#8a7f6a;margin-bottom:14px">Passo T · termine as dívidas</div>
-      <h2 style="font-family:'Spectral',serif;font-weight:600;font-size:26px;line-height:1.12;color:#2A2521;margin:0 0 10px">Simulador de Quitação de Dívidas</h2>
-      <p style="font:400 15px/1.6 'Archivo',sans-serif;color:#5c554b;margin:0 0 20px">Bola de neve × avalanche, lado a lado — com a data exata em que você fica livre de cada uma.</p>
-      <span style="display:inline-block;background:#255339;color:#fff;font:800 13.5px/1 'Archivo',sans-serif;padding:13px 20px;border-radius:999px">Abrir ferramenta →</span>
-    </a>
-
+    <div style="font:700 15.8px/1.3 'Archivo',sans-serif;letter-spacing:.14em;text-transform:uppercase;color:#255339;text-align:center;margin:40px 0 16px">🔒 Estas quatro vêm de bônus com o livro</div>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;max-width:1120px;margin:0 auto" class="tools-grid">
+      <a href="#livro" class="tool-card" style="display:block;background:#fff;border:1px solid rgba(42,37,33,.08);border-radius:16px;padding:28px 26px;color:#2A2521;opacity:.85">
+        <div style="font:700 10.5px/1 'Archivo',sans-serif;letter-spacing:.14em;text-transform:uppercase;color:#8a7f6a;margin-bottom:16px">Ache · A</div>
+        <h4 style="font-family:'Spectral',serif;font-weight:600;font-size:22px;margin-bottom:8px">Detector de Vazamentos Invisíveis™</h4>
+        <p style="font:400 14px/1.6 'Archivo',sans-serif;color:#6b6256;margin-bottom:18px">Marque seus gastinhos do mês e veja quanto isso vira por ano — e investido, em 10 anos.</p>
+        <span style="font:600 13.5px/1 'Archivo',sans-serif;color:#255339">🎁 Bônus do livro →</span>
+      </a>
+      <a href="#livro" class="tool-card" style="display:block;background:#fff;border:1px solid rgba(42,37,33,.08);border-radius:16px;padding:28px 26px;color:#2A2521;opacity:.85">
+        <div style="font:700 10.5px/1 'Archivo',sans-serif;letter-spacing:.14em;text-transform:uppercase;color:#8a7f6a;margin-bottom:16px">Diagnóstico · R</div>
+        <h4 style="font-family:'Spectral',serif;font-weight:600;font-size:22px;margin-bottom:8px">Índice Financeiro™</h4>
+        <p style="font:400 14px/1.6 'Archivo',sans-serif;color:#6b6256;margin-bottom:18px">Responda seis perguntas e receba sua nota de 0 a 100, com diagnóstico de dívidas, reserva e aposentadoria.</p>
+        <span style="font:600 13.5px/1 'Archivo',sans-serif;color:#255339">🎁 Bônus do livro →</span>
+      </a>
+      <a href="#livro" class="tool-card" style="display:block;background:#fff;border:1px solid rgba(42,37,33,.08);border-radius:16px;padding:28px 26px;color:#2A2521;opacity:.85">
+        <div style="font:700 10.5px/1 'Archivo',sans-serif;letter-spacing:.14em;text-transform:uppercase;color:#8a7f6a;margin-bottom:16px">Termine · T</div>
+        <h4 style="font-family:'Spectral',serif;font-weight:600;font-size:22px;margin-bottom:8px">Simulador de Quitação de Dívidas</h4>
+        <p style="font:400 14px/1.6 'Archivo',sans-serif;color:#6b6256;margin-bottom:18px">Simule bola de neve × avalanche e veja a data exata em que fica livre das dívidas.</p>
+        <span style="font:600 13.5px/1 'Archivo',sans-serif;color:#255339">🎁 Bônus do livro →</span>
+      </a>
+      <a href="#livro" class="tool-card" style="display:block;background:#fff;border:1px solid rgba(42,37,33,.08);border-radius:16px;padding:28px 26px;color:#2A2521;opacity:.85">
+        <div style="font:700 10.5px/1 'Archivo',sans-serif;letter-spacing:.14em;text-transform:uppercase;color:#8a7f6a;margin-bottom:16px">Separe · S</div>
+        <h4 style="font-family:'Spectral',serif;font-weight:600;font-size:22px;margin-bottom:8px">Planilha de Orçamento</h4>
+        <p style="font:400 14px/1.6 'Archivo',sans-serif;color:#6b6256;margin-bottom:18px">Monte seu orçamento com a regra 50/30/20 e veja onde ajustar para o dinheiro sobrar.</p>
+        <span style="font:600 13.5px/1 'Archivo',sans-serif;color:#255339">🎁 Bônus do livro →</span>
+      </a>
+    </div>
   </div>
+</section>
 
-  <div style="background:#eef3ea;border-left:3px solid #2f6b47;border-radius:0 12px 12px 0;padding:22px 26px;margin-top:26px">
-    <div style="font:700 10.5px/1 'Archivo',sans-serif;letter-spacing:.16em;text-transform:uppercase;color:#2f6b47;margin-bottom:10px">Por onde começar</div>
-    <p style="font:400 15.5px/1.65 'Archivo',sans-serif;color:#2A2521;margin:0 0 10px">Se você ainda não leu o livro, comece pelo <strong>Detector</strong>. Em cinco minutos você sai com o seu número na mão — e aí o livro inteiro passa a falar sobre o seu caso, não sobre o de outra pessoa.</p>
-    <p style="font:400 15.5px/1.65 'Archivo',sans-serif;color:#2A2521;margin:0">Se já leu, siga a ordem do método: Índice Financeiro no capítulo 6, Planilha no 7, Simulador no 9.</p>
+<!-- O LIVRO (PRODUTO ÚNICO) -->
+<section id="livro" style="padding:clamp(60px,8vw,104px) clamp(20px,5vw,64px);background:#1a3d29;color:#eaf1ea">
+  <div style="max-width:1080px;margin:0 auto">
+    <div style="text-align:center;max-width:700px;margin:0 auto clamp(40px,5vw,56px)">
+      <div style="font:600 11px/1 'Archivo',sans-serif;letter-spacing:.2em;text-transform:uppercase;color:#fff;margin-bottom:16px">O livro</div>
+      <h2 style="font-family:'Spectral',serif;font-weight:600;font-size:clamp(30px,4.4vw,56px);line-height:1.05;letter-spacing:-.01em;margin-bottom:6px;color:#fff">R.A.S.T.R.O - Para onde foi o meu dinheiro?</h2>
+      <p style="font:400 17px/1.5 'Archivo',sans-serif;font-style:italic;color:#fff;margin-bottom:18px">A pergunta que ninguém te fez</p>
+      <p style="font:400 17px/1.65 'Archivo',sans-serif;color:#fff">Uma conversa direta, sem jargão e sem julgamento, sobre para onde o seu dinheiro está indo. Os 6 passos do método R.A.S.T.R.O., explicados com calma — pra ler, entender e aplicar no seu ritmo.</p>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1.15fr .85fr;gap:clamp(28px,4vw,48px);align-items:start" class="checkup-grid">
+      <!-- what's inside -->
+      <div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:30px">
+          <div style="background:#fff;border-radius:14px;overflow:hidden;box-shadow:0 18px 40px -30px rgba(0,0,0,.5)"><img src="book-img/image7.png" alt="Dopamina e compras" style="width:100%;height:100%;object-fit:cover"></div>
+          <div style="background:#fff;border-radius:14px;overflow:hidden;box-shadow:0 18px 40px -30px rgba(0,0,0,.5);margin-top:22px"><img src="book-img/image3.png" alt="Bola de neve x avalanche" style="width:100%;height:100%;object-fit:cover"></div>
+        </div>
+        <div style="font:700 11px/1 'Archivo',sans-serif;letter-spacing:.16em;text-transform:uppercase;color:#fff;margin-bottom:20px">O que você recebe</div>
+        <div style="display:flex;flex-direction:column;gap:2px">
+          <div style="display:flex;gap:14px;align-items:flex-start;padding:15px 0;border-bottom:1px solid rgba(255,255,255,.1)"><span style="font-family:'Spectral',serif;font-weight:700;color:#fff;font-size:15px;min-width:22px">01</span><div><div style="font:600 15.5px/1.3 'Archivo',sans-serif;color:#fff;margin-bottom:2px">O livro completo</div><div style="font:400 13.5px/1.5 'Archivo',sans-serif;color:#fff">Físico e e-book, os 6 passos do método R.A.S.T.R.O.</div></div></div>
+          <div style="display:flex;gap:14px;align-items:flex-start;padding:15px 0;border-bottom:1px solid rgba(255,255,255,.1)"><span style="font-family:'Spectral',serif;font-weight:700;color:#fff;font-size:15px;min-width:22px">02</span><div><div style="font:600 15.5px/1.3 'Archivo',sans-serif;color:#fff;margin-bottom:2px">Bônus: Detector de Vazamentos Invisíveis™</div><div style="font:400 13.5px/1.5 'Archivo',sans-serif;color:#fff">Marque seus gastinhos do mês e veja quanto isso vira por ano — e investido, em 10 anos.</div></div></div>
+          <div style="display:flex;gap:14px;align-items:flex-start;padding:15px 0;border-bottom:1px solid rgba(255,255,255,.1)"><span style="font-family:'Spectral',serif;font-weight:700;color:#fff;font-size:15px;min-width:22px">03</span><div><div style="font:600 15.5px/1.3 'Archivo',sans-serif;color:#fff;margin-bottom:2px">Bônus: Índice Financeiro™</div><div style="font:400 13.5px/1.5 'Archivo',sans-serif;color:#fff">Responda seis perguntas e receba sua nota de 0 a 100, com diagnóstico de dívidas, reserva e aposentadoria.</div></div></div>
+          <div style="display:flex;gap:14px;align-items:flex-start;padding:15px 0;border-bottom:1px solid rgba(255,255,255,.1)"><span style="font-family:'Spectral',serif;font-weight:700;color:#fff;font-size:15px;min-width:22px">04</span><div><div style="font:600 15.5px/1.3 'Archivo',sans-serif;color:#fff;margin-bottom:2px">Bônus: Simulador de Quitação de Dívidas</div><div style="font:400 13.5px/1.5 'Archivo',sans-serif;color:#fff">Bola de neve × avalanche — veja a data exata em que fica livre das dívidas.</div></div></div>
+          <div style="display:flex;gap:14px;align-items:flex-start;padding:15px 0"><span style="font-family:'Spectral',serif;font-weight:700;color:#fff;font-size:15px;min-width:22px">05</span><div><div style="font:600 15.5px/1.3 'Archivo',sans-serif;color:#fff;margin-bottom:2px">Bônus: Planilha de Orçamento</div><div style="font:400 13.5px/1.5 'Archivo',sans-serif;color:#fff">Monte seu orçamento com a regra 50/30/20 e veja onde ajustar para o dinheiro sobrar.</div></div></div>
+        </div>
+      </div>
+
+      <!-- offer card -->
+      <div style="background:#fff;border-radius:20px;padding:clamp(28px,3vw,38px);color:#2A2521;position:sticky;top:82px;box-shadow:0 30px 60px -30px rgba(0,0,0,.5)">
+        <div style="display:inline-block;font:700 10.5px/1 'Archivo',sans-serif;letter-spacing:.14em;text-transform:uppercase;color:#c47d23;background:#faf2e3;padding:7px 12px;border-radius:999px;margin-bottom:20px">Oferta de lançamento</div>
+        <p style="font:600 13px/1.5 'Archivo',sans-serif;color:#b3392f;margin-bottom:16px">Bônus garantidos apenas para quem comprar durante o lançamento</p>
+
+        <div style="display:flex;flex-direction:column;gap:2px;margin-bottom:16px;padding-bottom:16px;border-bottom:1px dashed rgba(42,37,33,.15)">
+          <div style="display:flex;justify-content:space-between;gap:12px;font:400 13px/1.4 'Archivo',sans-serif;color:#8a7f6a"><span>Livro R.A.S.T.R.O - e-book completo</span><span>R$ 97</span></div>
+          <div style="display:flex;justify-content:space-between;gap:12px;font:400 13px/1.4 'Archivo',sans-serif;color:#8a7f6a"><span>Bônus: Detector de Vazamentos Invisíveis™</span><span style="white-space:nowrap">R$ 37</span></div>
+          <div style="display:flex;justify-content:space-between;gap:12px;font:400 13px/1.4 'Archivo',sans-serif;color:#8a7f6a"><span>Bônus: Índice Financeiro™</span><span style="white-space:nowrap">R$ 37</span></div>
+          <div style="display:flex;justify-content:space-between;gap:12px;font:400 13px/1.4 'Archivo',sans-serif;color:#8a7f6a"><span>Bônus: Simulador de Quitação de Dívidas</span><span style="white-space:nowrap">R$ 37</span></div>
+          <div style="display:flex;justify-content:space-between;gap:12px;font:400 13px/1.4 'Archivo',sans-serif;color:#8a7f6a"><span>Bônus: Planilha de Orçamento</span><span style="white-space:nowrap">R$ 37</span></div>
+          <div style="display:flex;justify-content:space-between;font:600 13.5px/1.4 'Archivo',sans-serif;color:#2A2521;margin-top:6px"><span>Valor total</span><span style="text-decoration:line-through;color:#9a9183">R$ 245</span></div>
+        </div>
+
+        <div style="display:flex;align-items:baseline;gap:6px;margin-bottom:6px">
+          <span style="font-family:'Spectral',serif;font-weight:400;font-size:22px;color:#2A2521">R$</span>
+          <span style="font-family:'Spectral',serif;font-weight:700;font-size:64px;line-height:.9;color:#255339;letter-spacing:-.02em">59,09</span>
+        </div>
+        <p style="font:400 13.5px/1.5 'Archivo',sans-serif;color:#8a7f6a;margin-bottom:22px">ou 12x de R$ 4,92 · e-book</p>
+        <a href="https://pay.hotmart.com/W106793169N" target="_blank" data-hotmart style="display:block;text-align:center;background:#255339;color:#fff;font:700 18px/1 'Archivo',sans-serif;padding:20px;border-radius:12px;margin-bottom:14px">Quero o livro →</a>
+        <div style="display:flex;align-items:center;gap:12px;background:#f4f8f1;border-radius:10px;padding:12px 14px">
+          <span style="font-size:22px;line-height:1">🛡️</span>
+          <div><div style="font:700 12.5px/1.3 'Archivo',sans-serif;color:#1a3d29">Garantia incondicional de 7 dias</div><div style="font:400 12px/1.4 'Archivo',sans-serif;color:#6b6256">Não gostou? Devolvemos 100% do valor, sem perguntas.</div></div>
+        </div>
+      </div>
+    </div>
   </div>
+</section>
 
-  <div style="background:#fff;border:1px dashed rgba(42,37,33,.22);border-radius:12px;padding:20px 24px;margin-top:14px">
-    <p style="font:400 14.5px/1.6 'Archivo',sans-serif;color:#5c554b;margin:0">Esta página é o bônus de quem comprou <em>R.A.S.T.R.O. — Para onde foi o meu dinheiro?</em>. O endereço não está publicado em lugar nenhum: chegou até você pelo livro. Use à vontade, quantas vezes quiser — só peço que não repasse o link.</p>
+<!-- SOBRE A AUTORA -->
+<section id="autora" style="padding:clamp(60px,8vw,104px) clamp(20px,5vw,64px);background:#eef3ea">
+  <div style="max-width:1080px;margin:0 auto;display:grid;grid-template-columns:.8fr 1.2fr;gap:clamp(32px,5vw,64px);align-items:center" class="two-col">
+    <div style="border-radius:18px;overflow:hidden;box-shadow:0 30px 60px -34px rgba(42,37,33,.5)"><img src="ilana-natural.jpg" alt="Ilana Horta" style="width:100%;aspect-ratio:3/4;object-fit:cover;object-position:center top"></div>
+    <div>
+      <div style="font:600 11px/1 'Archivo',sans-serif;letter-spacing:.2em;text-transform:uppercase;color:#255339;margin-bottom:16px">Quem escreveu</div>
+      <h2 style="font-family:'Spectral',serif;font-weight:600;font-size:clamp(28px,3.6vw,46px);line-height:1.08;letter-spacing:-.01em;margin-bottom:18px">Ilana Horta</h2>
+      <p style="font:400 16.5px/1.7 'Archivo',sans-serif;color:#5c554b;margin-bottom:16px">A Ilana passou anos dentro das salas onde o dinheiro grande é decidido — avaliando empresas e estruturando investimentos em organizações como <strong style="color:#2A2521;font-weight:600">Deloitte, GE, Uber e Google</strong>.</p>
+      <p style="font:400 16.5px/1.7 'Archivo',sans-serif;color:#5c554b;margin-bottom:28px">E percebeu uma coisa que muda tudo: os problemas de dinheiro das empresas e das pessoas têm a mesma raiz. A diferença é que ninguém traduz isso pra vida real. É o que ela faz aqui — sem julgamento, do seu lado.</p>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:0;border-top:1px solid rgba(42,37,33,.12);max-width:440px">
+        <div style="padding:18px 0;border-right:1px solid rgba(42,37,33,.12);padding-right:20px"><div style="font:600 9px/1 'Archivo',sans-serif;letter-spacing:.16em;text-transform:uppercase;color:#9a9183;margin-bottom:7px">Experiência</div><div style="font-family:'Spectral',serif;font-weight:500;font-size:17px;color:#2A2521">Deloitte · GE · Uber · Google</div></div>
+        <div style="padding:18px 0 18px 20px"><div style="font:600 9px/1 'Archivo',sans-serif;letter-spacing:.16em;text-transform:uppercase;color:#9a9183;margin-bottom:7px">Formação</div><div style="font-family:'Spectral',serif;font-weight:500;font-size:17px;color:#2A2521">Finanças · Valuation · Desenvolvimento de Negócios · MBA</div></div>
+      </div>
+      <div style="display:flex;gap:18px;margin-top:18px">
+        <a href="https://www.linkedin.com/in/ilanahorta" style="font:600 13.5px/1 'Archivo',sans-serif;color:#255339">LinkedIn ↗</a>
+        <a href="https://instagram.com/ilanahorta" style="font:600 13.5px/1 'Archivo',sans-serif;color:#255339">@ilanahorta ↗</a>
+      </div>
+    </div>
   </div>
+</section>
 
-</main>
+<!-- DEPOIMENTOS -->
+<section style="padding:clamp(56px,7vw,96px) clamp(20px,5vw,64px);background:#f7f4ee">
+  <div style="max-width:1080px;margin:0 auto;text-align:center">
+    <div style="font:600 11px/1 'Archivo',sans-serif;letter-spacing:.2em;text-transform:uppercase;color:#255339;margin-bottom:16px">O que você sai sabendo</div>
+    <h2 style="font-family:'Spectral',serif;font-weight:600;font-size:clamp(28px,3.6vw,46px);line-height:1.06;letter-spacing:-.01em;margin-bottom:clamp(36px,4vw,50px)">Três perguntas que você vai <span style="color:#255339">conseguir responder</span></h2>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px" class="tools-grid">
+      <div style="background:#fff;border:1px solid rgba(42,37,33,.08);border-radius:16px;padding:30px 26px;text-align:left"><div style="font-family:'Spectral',serif;font-weight:700;font-size:34px;color:#255339;line-height:1;margin-bottom:14px">1</div><div style="font:700 15.5px/1.35 'Archivo',sans-serif;color:#2A2521;margin-bottom:10px">Para onde foi o dinheiro deste mês</div><p style="font:400 15px/1.65 'Archivo',sans-serif;color:#5c554b;margin:0">Não a sensação — o número, categoria por categoria, com o extrato aberto na frente.</p></div>
+      <div style="background:#fff;border:1px solid rgba(42,37,33,.08);border-radius:16px;padding:30px 26px;text-align:left;border-top:2px solid #255339"><div style="font-family:'Spectral',serif;font-weight:700;font-size:34px;color:#255339;line-height:1;margin-bottom:14px">2</div><div style="font:700 15.5px/1.35 'Archivo',sans-serif;color:#2A2521;margin-bottom:10px">Em que dia a sua dívida termina</div><p style="font:400 15px/1.65 'Archivo',sans-serif;color:#5c554b;margin:0">Uma data no calendário, calculada a partir do que você paga hoje. Dívida com data deixa de ser assombração.</p></div>
+      <div style="background:#fff;border:1px solid rgba(42,37,33,.08);border-radius:16px;padding:30px 26px;text-align:left"><div style="font-family:'Spectral',serif;font-weight:700;font-size:34px;color:#255339;line-height:1;margin-bottom:14px">3</div><div style="font:700 15.5px/1.35 'Archivo',sans-serif;color:#2A2521;margin-bottom:10px">Quanto você precisa guardar, e por quê</div><p style="font:400 15px/1.65 'Archivo',sans-serif;color:#5c554b;margin:0">O valor do seu primeiro mês de reserva, medido pela sua vida real — não por regra de fora.</p></div>
 
-<footer style="background:#0f2419;padding:32px clamp(20px,5vw,64px)">
-  <div style="max-width:960px;margin:0 auto;text-align:center">
-    <p style="font:400 13.5px/1.6 'Archivo',sans-serif;color:#bfe0c4;margin:0 0 6px">R.A.S.T.R.O. · Ilana Horta</p>
-    <p style="font:400 12.5px/1.6 'Archivo',sans-serif;color:rgba(234,241,234,.6);margin:0">© 2026 · Todos os direitos reservados</p>
+</section>
+
+<!-- FAQ -->
+<section style="padding:0 clamp(20px,5vw,64px) clamp(56px,7vw,96px);background:#f7f4ee">
+  <div style="max-width:780px;margin:0 auto">
+    <div style="text-align:center;margin-bottom:clamp(32px,4vw,44px)">
+      <div style="font:600 11px/1 'Archivo',sans-serif;letter-spacing:.2em;text-transform:uppercase;color:#255339;margin-bottom:16px">Perguntas frequentes</div>
+      <h2 style="font-family:'Spectral',serif;font-weight:600;font-size:clamp(26px,3.2vw,40px);line-height:1.1;letter-spacing:-.01em">Ainda com dúvidas?</h2>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:2px">
+      <div style="background:#fff;border:1px solid rgba(42,37,33,.08);border-radius:14px;padding:22px 24px"><div style="font:600 16px/1.4 'Archivo',sans-serif;color:#2A2521;margin-bottom:8px">Preciso entender de finanças pra ler o livro?</div><p style="font:400 14.5px/1.6 'Archivo',sans-serif;color:#5c554b">Não. O livro foi escrito sem jargão, pra quem nunca organizou as contas na vida.</p></div>
+      <div style="background:#fff;border:1px solid rgba(42,37,33,.08);border-radius:14px;padding:22px 24px"><div style="font:600 16px/1.4 'Archivo',sans-serif;color:#2A2521;margin-bottom:8px">O livro físico e o e-book são compras separadas?</div><p style="font:400 14.5px/1.6 'Archivo',sans-serif;color:#5c554b">Sim, são pedidos distintos — nenhum pedido inclui os dois formatos. Aqui você leva o <strong style="font-weight:600;color:#2A2521">e-book</strong>, com entrega digital imediata e os quatro bônus inclusos. O livro físico é vendido à parte.</p></div>
+      <div style="background:#fff;border:1px solid rgba(42,37,33,.08);border-radius:14px;padding:22px 24px"><div style="font:600 16px/1.4 'Archivo',sans-serif;color:#2A2521;margin-bottom:8px">Como acesso os bônus (Índice Financeiro™ e Simulador de Dívidas)?</div><p style="font:400 14.5px/1.6 'Archivo',sans-serif;color:#5c554b">O acesso chega por e-mail assim que a compra é confirmada — são ferramentas online, sem instalação.</p></div>
+      <div style="background:#fff;border:1px solid rgba(42,37,33,.08);border-radius:14px;padding:22px 24px"><div style="font:600 16px/1.4 'Archivo',sans-serif;color:#2A2521;margin-bottom:8px">E se eu não gostar?</div><p style="font:400 14.5px/1.6 'Archivo',sans-serif;color:#5c554b">Garantia incondicional de 7 dias — devolvemos 100% do valor, sem perguntas.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- LEAD CAPTURE -->
+<section style="padding:0 clamp(20px,5vw,64px) clamp(60px,8vw,100px);background:#f7f4ee">
+  <div style="max-width:940px;margin:0 auto;background:#1a3d29;border-radius:22px;padding:clamp(36px,5vw,60px);text-align:center;color:#eaf1ea">
+    <div style="font:600 11px/1 'Archivo',sans-serif;letter-spacing:.2em;text-transform:uppercase;color:#fff;margin-bottom:16px">Conteúdo gratuito</div>
+    <h3 style="font-family:'Spectral',serif;font-weight:600;font-size:clamp(26px,3.2vw,40px);line-height:1.1;color:#fff;margin-bottom:12px">Receba dicas pra fechar seus vazamentos</h3>
+    <p style="font:400 16px/1.6 'Archivo',sans-serif;color:#fff;max-width:520px;margin:0 auto 28px">Ferramentas novas e economias práticas, direto no seu e-mail. Sem spam, no seu ritmo.</p>
+    <form data-lead style="max-width:560px;margin:0 auto">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px" class="lead-fields">
+        <input type="text" name="nome" placeholder="Seu nome" required style="width:100%;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16);border-radius:10px;padding:15px 16px;font:400 15px/1 'Archivo',sans-serif;color:#fff;outline:none">
+        <input type="email" name="email" placeholder="Seu melhor e-mail" required style="width:100%;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16);border-radius:10px;padding:15px 16px;font:400 15px/1 'Archivo',sans-serif;color:#fff;outline:none">
+      </div>
+      <button type="submit" style="width:100%;background:#f7f4ee;color:#1a3d29;font:700 15px/1 'Archivo',sans-serif;padding:16px;border:none;border-radius:10px;cursor:pointer">Quero receber →</button>
+    </form>
+  </div>
+</section>
+
+<footer style="background:#1c1a15;padding:clamp(28px,4vw,40px) clamp(20px,5vw,64px)">
+  <div style="max-width:1080px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap" class="footer-row">
+    <div>
+      <div style="font-family:'Spectral',serif;font-style:italic;font-size:18px;color:#fff">R.A.S.T.R.O - Para onde foi o meu dinheiro?</div>
+      <a href="https://metodorastro.com.br" style="font:600 13px/1.4 'Archivo',sans-serif;color:#fff;text-decoration:none">metodorastro.com.br</a>
+    </div>
+    <div style="font:400 12.5px/1.5 'Archivo',sans-serif;color:rgba(240,235,225,.45)">© 2026 Ilana Horta · Todos os direitos reservados</div>
+    <a href="https://instagram.com/ilanahorta" style="font:500 12.5px/1 'Archivo',sans-serif;color:rgba(240,235,225,.6)">@ilanahorta ↗</a>
   </div>
 </footer>
 
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:900}}">
+class Component extends DCLogic {
+  componentDidMount() {
+    // count-up on hero total when scrolled into view
+    const el = this.base && this.base.querySelector('[data-countup]');
+    if (el && 'IntersectionObserver' in window) {
+      const target = parseFloat(el.getAttribute('data-countup'));
+      const fmt = (n) => 'R$ ' + n.toLocaleString('pt-BR', {minimumFractionDigits:2, maximumFractionDigits:2});
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+          if (e.isIntersecting) {
+            const start = performance.now(), dur = 1100;
+            const tick = (now) => {
+              const p = Math.min(1, (now - start) / dur);
+              const eased = 1 - Math.pow(1 - p, 3);
+              el.textContent = fmt(target * eased);
+              if (p < 1) requestAnimationFrame(tick);
+            };
+            requestAnimationFrame(tick);
+            io.disconnect();
+          }
+        });
+      }, {threshold: .6});
+      io.observe(el);
+    }
+
+    // lead form (front-end only until endpoint is wired)
+    const form = this.base && this.base.querySelector('form[data-lead]');
+    if (form) {
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        form.innerHTML = '<div style="padding:16px 0;font-family:Spectral,serif;font-style:italic;font-size:24px;color:#fff">Prontinho! ✨ Seu primeiro conteúdo já está a caminho.</div>';
+      });
+    }
+  }
+  renderVals() { return {}; }
+}
+</script>
 </body>
 </html>
