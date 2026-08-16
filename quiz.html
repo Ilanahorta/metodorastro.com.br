@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Archivo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:#f7f4ee}
+a{color:#2f6b47}
+a:hover{color:#1a4a2d}
+@keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+</style>
+</helmet>
+
+<div style="min-height:100vh;background:#f7f4ee;color:#2A2521;font-family:'Archivo',sans-serif">
+
+<nav style="position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:0 clamp(20px,4vw,52px);height:60px;background:rgba(247,244,238,.94);backdrop-filter:blur(6px);border-bottom:1px solid rgba(42,37,33,.08)">
+  <a href="index.html" style="font:500 14.5px/1 'Archivo',sans-serif;color:#6b6256;text-decoration:none">← R.A.S.T.R.O.</a>
+  <a href="https://pay.hotmart.com/W106793169N" target="_blank" style="background:#e8a13c;color:#234f36;font:800 14px/1 'Archivo',sans-serif;padding:10px 18px;border-radius:999px;border:2px solid #234f36;text-decoration:none;white-space:nowrap">Quero o Check-up →</a>
+</nav>
+
+<!-- INTRO -->
+<sc-if value="{{ showIntro }}" hint-placeholder-val="{{ true }}">
+<section style="padding:clamp(56px,8vw,96px) clamp(20px,5vw,64px);max-width:640px;margin:0 auto;text-align:center;animation:fadeUp .5s ease-out">
+  <div style="display:inline-flex;align-items:center;gap:7px;font:700 11.5px/1 'Archivo',sans-serif;letter-spacing:.14em;text-transform:uppercase;color:#234f36;background:#bfe0c4;padding:7px 13px;border-radius:999px;margin-bottom:24px">Quiz gratuito · 1 minuto</div>
+  <h1 style="font-family:'Spectral',serif;font-weight:600;font-size:clamp(36px,5.6vw,58px);line-height:1.06;letter-spacing:-.01em;margin:0 0 18px;color:#0f2419">Você conhece mesmo<br><span style="color:#e8a13c">os seus gastos?</span></h1>
+  <p style="font:400 clamp(17px,1.9vw,20px)/1.6 'Archivo',sans-serif;color:#5c554b;max-width:480px;margin:0 auto 32px">5 perguntas rápidas — sem abrir extrato, sem digitar números. Descubra como você gasta e por onde o seu dinheiro está escapando.</p>
+  <button onClick="{{ start }}" style="background:#0f2419;color:#e8a13c;font:800 19px/1 'Archivo',sans-serif;padding:19px 42px;border-radius:999px;border:2px solid #e8a13c;cursor:pointer;box-shadow:0 12px 32px -8px rgba(15,36,25,.5)">Descobrir agora →</button>
+  <p style="font:400 14.5px/1.5 'Archivo',sans-serif;color:#8a7f6a;margin-top:16px">5 perguntas · 1 minuto · Resultado na hora</p>
+</section>
+</sc-if>
+
+<!-- QUESTION -->
+<sc-if value="{{ showQuestion }}" hint-placeholder-val="{{ false }}">
+<section style="padding:clamp(40px,5vw,56px) clamp(20px,5vw,64px);max-width:640px;margin:0 auto;animation:fadeUp .4s ease-out">
+  <div style="display:flex;align-items:center;gap:12px;margin-bottom:28px">
+    <div style="flex:1;height:4px;background:rgba(42,37,33,.1);border-radius:4px;overflow:hidden">
+      <div style="height:100%;background:#2f6b47;border-radius:4px;transition:width .4s ease;width:{{ progressPct }}%"></div>
+    </div>
+    <span style="font:700 14px/1 'Archivo',sans-serif;color:#2f6b47;flex:none">{{ qLabel }}</span>
+  </div>
+  <h2 style="font-family:'Spectral',serif;font-weight:600;font-size:clamp(25px,3.9vw,34px);line-height:1.25;color:#0f2419;margin:0 0 24px">{{ qText }}</h2>
+  <div style="display:flex;flex-direction:column;gap:10px">
+    <sc-for list="{{ options }}" as="opt" hint-placeholder-count="4">
+      <button onClick="{{ opt.pick }}" style="text-align:left;background:#fff;border:2px solid rgba(42,37,33,.1);border-radius:14px;padding:16px 20px;font:500 16.5px/1.45 'Archivo',sans-serif;color:#2A2521;cursor:pointer;transition:all .15s;display:flex;align-items:center;gap:14px" style-hover="border-color:#2f6b47;background:rgba(47,107,71,.04)">
+        <span style="width:32px;height:32px;border-radius:50%;background:#f0ede6;display:flex;align-items:center;justify-content:center;font:700 14px/1 'Archivo',sans-serif;color:#8a7f6a;flex:none">{{ opt.letter }}</span>
+        <span>{{ opt.text }}</span>
+      </button>
+    </sc-for>
+  </div>
+</section>
+</sc-if>
+
+<!-- EMAIL GATE -->
+<sc-if value="{{ showEmailGate }}" hint-placeholder-val="{{ false }}">
+<section style="padding:clamp(56px,8vw,96px) clamp(20px,5vw,64px);max-width:540px;margin:0 auto;text-align:center;animation:fadeUp .5s ease-out">
+  <div style="font-size:48px;margin-bottom:16px">🔍</div>
+  <h2 style="font-family:'Spectral',serif;font-weight:600;font-size:clamp(29px,4.3vw,42px);line-height:1.15;color:#0f2419;margin:0 0 12px">Seu diagnóstico está pronto!</h2>
+  <p style="font:400 17.5px/1.6 'Archivo',sans-serif;color:#5c554b;margin:0 0 32px">Digite seu e-mail pra ver para onde o seu dinheiro está indo — e receber dicas pra fechar esses ralos.</p>
+  <div style="display:flex;flex-direction:column;gap:12px;text-align:left">
+    <input type="text" placeholder="Seu nome" value="{{ gateName }}" onChange="{{ setGateName }}" style="width:100%;border:2px solid rgba(42,37,33,.12);border-radius:12px;padding:15px 18px;font:500 17px/1 'Archivo',sans-serif;color:#2A2521;background:#fff;outline:none">
+    <input type="email" placeholder="Seu melhor e-mail" value="{{ gateEmail }}" onChange="{{ setGateEmail }}" style="width:100%;border:2px solid rgba(42,37,33,.12);border-radius:12px;padding:15px 18px;font:500 17px/1 'Archivo',sans-serif;color:#2A2521;background:#fff;outline:none">
+    <button onClick="{{ revealResult }}" style="background:#0f2419;color:#e8a13c;font:800 19px/1 'Archivo',sans-serif;padding:19px;border-radius:999px;border:2px solid #e8a13c;cursor:pointer;width:100%">Ver meu diagnóstico →</button>
+  </div>
+  <p style="font:400 13.5px/1.5 'Archivo',sans-serif;color:#8a7f6a;margin-top:14px">Seus dados estão seguros. Você pode cancelar quando quiser.</p>
+</section>
+</sc-if>
+
+<!-- RESULT -->
+<sc-if value="{{ showResult }}" hint-placeholder-val="{{ false }}">
+<section style="padding:clamp(40px,6vw,64px) clamp(20px,5vw,64px) 80px;max-width:720px;margin:0 auto;animation:fadeUp .5s ease-out">
+
+  <!-- Header -->
+  <div style="text-align:center;margin-bottom:32px">
+    <div style="font-size:56px;margin-bottom:12px">{{ resultEmoji }}</div>
+    <div style="font:700 11.5px/1 'Archivo',sans-serif;letter-spacing:.14em;text-transform:uppercase;color:#2f6b47;margin-bottom:12px">Para onde está indo o seu dinheiro</div>
+    <h2 style="font-family:'Spectral',serif;font-weight:700;font-size:clamp(33px,5.4vw,48px);line-height:1.1;color:#0f2419;margin:0 0 8px">{{ resultTitle }}</h2>
+    <p style="font-family:'Spectral',serif;font-style:italic;font-weight:500;font-size:clamp(19px,2.3vw,23px);color:#e8a13c;margin:0">{{ resultTagline }}</p>
+  </div>
+
+  <!-- Onde está vazando -->
+  <div style="background:#fff;border:1px solid rgba(42,37,33,.1);border-radius:18px;padding:clamp(24px,3vw,32px);margin-bottom:20px">
+    <div style="font:700 11.5px/1 'Archivo',sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#e8a13c;margin-bottom:16px">📍 Por onde o seu dinheiro está saindo</div>
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <sc-for list="{{ leakCategories }}" as="cat" hint-placeholder-count="3">
+        <div style="display:flex;align-items:center;gap:14px;padding:14px 16px;background:#faf9f5;border-radius:12px">
+          <span style="font-size:24px;flex:none">{{ cat.icon }}</span>
+          <div style="flex:1">
+            <div style="font:600 16.5px/1.3 'Archivo',sans-serif;color:#0f2419">{{ cat.name }}</div>
+            <div style="font:400 14px/1.45 'Archivo',sans-serif;color:#8a7f6a">{{ cat.desc }}</div>
+          </div>
+          <div style="background:#fff3e0;color:#c47d23;font:700 13px/1 'Archivo',sans-serif;padding:6px 11px;border-radius:8px">{{ cat.severity }}</div>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+
+  <!-- Descrição do perfil -->
+  <div style="background:#fff;border:1px solid rgba(42,37,33,.1);border-radius:18px;padding:clamp(24px,3vw,32px);margin-bottom:20px">
+    <p style="font:400 16.5px/1.7 'Archivo',sans-serif;color:#5c554b">{{ resultDesc }}</p>
+  </div>
+
+  <!-- Como fechar -->
+  <div style="background:#0f2419;border-radius:18px;padding:clamp(24px,3vw,32px);margin-bottom:24px">
+    <div style="font:700 11.5px/1 'Archivo',sans-serif;letter-spacing:.14em;text-transform:uppercase;color:#e8a13c;margin-bottom:18px">Como fechar esses ralos</div>
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <sc-for list="{{ resultSteps }}" as="step" hint-placeholder-count="3">
+        <div style="display:flex;gap:14px;align-items:flex-start">
+          <span style="width:28px;height:28px;border-radius:50%;background:#e8a13c;color:#0f2419;font:800 13px/28px 'Archivo',sans-serif;text-align:center;flex:none">{{ step.n }}</span>
+          <p style="font:400 15.5px/1.6 'Archivo',sans-serif;color:#cfe4d3;margin:2px 0 0">{{ step.text }}</p>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+
+  <!-- CTA Livro -->
+  <div style="background:#fff;border:2px solid #2f6b47;border-radius:18px;padding:clamp(26px,3.5vw,36px);text-align:center;margin-bottom:24px">
+    <div style="font:700 12px/1 'Archivo',sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#2f6b47;margin-bottom:10px">Próximo passo</div>
+    <h3 style="font-family:'Spectral',serif;font-weight:600;font-size:clamp(23px,2.9vw,29px);line-height:1.25;color:#0f2419;margin:0 0 10px">Você já sabe COMO gasta.<br>Falta descobrir QUANTO.</h3>
+    <p style="font:400 15.5px/1.6 'Archivo',sans-serif;color:#5c554b;margin:0 auto 22px;max-width:420px">O método R.A.S.T.R.O. mostra o valor exato dos seus ralos e como fechar cada um — com 4 ferramentas prontas pra usar.</p>
+    <div style="display:flex;flex-direction:column;gap:8px;text-align:left;max-width:360px;margin:0 auto 24px">
+      <div style="display:flex;gap:10px;align-items:center;font:500 15px/1.4 'Archivo',sans-serif;color:#2A2521"><span style="color:#2f6b47;font-weight:800">✓</span> Detector de Vazamentos Invisíveis™</div>
+      <div style="display:flex;gap:10px;align-items:center;font:500 15px/1.4 'Archivo',sans-serif;color:#2A2521"><span style="color:#2f6b47;font-weight:800">✓</span> Índice Financeiro™</div>
+      <div style="display:flex;gap:10px;align-items:center;font:500 15px/1.4 'Archivo',sans-serif;color:#2A2521"><span style="color:#2f6b47;font-weight:800">✓</span> Simulador de Quitação de Dívidas</div>
+      <div style="display:flex;gap:10px;align-items:center;font:500 15px/1.4 'Archivo',sans-serif;color:#2A2521"><span style="color:#2f6b47;font-weight:800">✓</span> Planilha de Orçamento</div>
+    </div>
+    <a href="https://pay.hotmart.com/W106793169N" target="_blank" style="display:block;background:#e8a13c;color:#0f2419;font:800 17.5px/1.3 'Archivo',sans-serif;padding:19px 28px;border-radius:999px;text-align:center;text-decoration:none;border:2px solid #0f2419;box-shadow:0 10px 24px -8px rgba(0,0,0,.25)">Quero o método completo — R$ 59,09 →</a>
+    <p style="font:400 13.5px/1.5 'Archivo',sans-serif;color:#8a7f6a;margin:12px 0 0">ou 12× de R$ 4,92 · acesso imediato</p>
+  </div>
+
+  <!-- Share -->
+  <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center">
+    <button onClick="{{ shareResult }}" style="background:#0f2419;color:#cfe4d3;font:600 15px/1 'Archivo',sans-serif;padding:14px 22px;border-radius:12px;border:none;cursor:pointer">{{ shareLabel }}</button>
+    <button onClick="{{ generateImage }}" style="background:#fff;color:#2A2521;font:600 15px/1 'Archivo',sans-serif;padding:14px 22px;border-radius:12px;border:1px solid rgba(42,37,33,.15);cursor:pointer">{{ imageLabel }}</button>
+    <button onClick="{{ restart }}" style="background:transparent;color:#8a7f6a;font:600 14px/1 'Archivo',sans-serif;padding:14px 18px;border-radius:12px;border:1px solid rgba(42,37,33,.1);cursor:pointer">Refazer quiz</button>
+  </div>
+
+  <canvas id="share-canvas-quiz" width="1080" height="1350" style="display:none"></canvas>
+</section>
+</sc-if>
+
+<div style="text-align:center;padding:0 20px 40px">
+  <a href="https://metodorastro.com.br" style="font:600 14.5px/1.4 'Archivo',sans-serif;color:#2f6b47;text-decoration:none">metodorastro.com.br</a>
+</div>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+
+const QUESTIONS = [
+  {
+    text: 'Sexta à noite, bateu vontade de pedir comida. Você:',
+    opts: [
+      { text: 'Abre o app e pede — nem olha o preço, já sabe o que quer', type: 'impulsivo', cats: ['delivery','impulso'] },
+      { text: 'Compara três apps, cupom, taxa de entrega. Só então pede', type: 'controlado', cats: ['delivery','pontocego'] },
+      { text: 'É caro, mas eu mereço', type: 'emocional', cats: ['delivery','emocional'] },
+      { text: 'Só dessa vez. Semana que vem eu cozinho', type: 'despreocupado', cats: ['delivery','adiamento'] },
+    ]
+  },
+  {
+    text: 'Chega a fatura do cartão. Sua primeira reação:',
+    opts: [
+      { text: 'Comprei tudo isso mesmo? Nem lembro da metade', type: 'impulsivo', cats: ['impulso','cartao'] },
+      { text: 'Confere linha por linha. Bate tudo — e mesmo assim assusta', type: 'controlado', cats: ['pontocego','cartao'] },
+      { text: 'Precisava de tudo isso. Foi um mês difícil', type: 'emocional', cats: ['emocional','impulso'] },
+      { text: 'Mês que vem eu controlo melhor', type: 'despreocupado', cats: ['adiamento','cartao'] },
+    ]
+  },
+  {
+    text: 'Você entra no mercado pra comprar uma coisa. Sai com:',
+    opts: [
+      { text: 'A coisa e mais seis. Nem viu acontecer', type: 'impulsivo', cats: ['impulso','esquecimento'] },
+      { text: 'Só o que estava na lista — você levou lista', type: 'controlado', cats: ['pontocego'] },
+      { text: 'Um chocolate, um vinho, algo pra melhorar o dia', type: 'emocional', cats: ['emocional','impulso'] },
+      { text: 'Mais do que devia. Depois você compensa', type: 'despreocupado', cats: ['impulso','adiamento'] },
+    ]
+  },
+  {
+    text: 'Fim do mês, conta no vermelho. Você pensa:',
+    opts: [
+      { text: 'Sei lá onde foi parar. Parece que evapora', type: 'impulsivo', cats: ['esquecimento','impulso'] },
+      { text: 'Eu controlei cada compra. Como não sobrou?', type: 'controlado', cats: ['pontocego','assinaturas'] },
+      { text: 'Pelo menos aproveitei. Dinheiro vai e vem', type: 'emocional', cats: ['emocional'] },
+      { text: 'Tudo bem, o próximo mês vai ser diferente', type: 'despreocupado', cats: ['adiamento'] },
+    ]
+  },
+  {
+    text: 'Aparece mais um streaming com 1º mês grátis. Você:',
+    opts: [
+      { text: 'Assina na hora. Já nem lembra quantos tem', type: 'impulsivo', cats: ['assinaturas','impulso'] },
+      { text: 'Assina o anual — fez a conta, sai mais barato por mês', type: 'controlado', cats: ['assinaturas','pontocego'] },
+      { text: 'Assina. É seu descanso, seu momento', type: 'emocional', cats: ['assinaturas','emocional'] },
+      { text: 'Assina e promete cancelar os outros depois', type: 'despreocupado', cats: ['assinaturas','adiamento'] },
+    ]
+  },
+];
+
+const LEAK_CATS = {
+  delivery:      { icon: '🛵', name: 'Delivery e comida fora', desc: 'Apps de comida, padaria, cafezinho de todo dia' },
+  assinaturas:   { icon: '📱', name: 'Assinaturas acumuladas', desc: 'Streamings, apps e planos que você nem abre mais' },
+  impulso:       { icon: '🛍️', name: 'Compras não planejadas', desc: 'O que entra no carrinho sem estar na lista' },
+  pontocego:     { icon: '🔍', name: 'Ponto cego do controle', desc: 'Você vigia os R$ 20 e não vê os R$ 800 fixos' },
+  emocional:     { icon: '🎭', name: 'Compra que alivia o dia', desc: 'Gasto que resolve o humor, não a necessidade' },
+  adiamento:     { icon: '📅', name: 'O custo do "depois"', desc: 'Cada mês adiado é mais um mês vazando' },
+  cartao:        { icon: '💳', name: 'Fatura sem dono', desc: 'Parcelas somadas que ninguém consegue explicar' },
+  esquecimento:  { icon: '🕳️', name: 'Gastos no automático', desc: 'Débitos e hábitos que rodam sem você olhar' },
+};
+
+const PROFILES = {
+  impulsivo: {
+    emoji: '🔥',
+    title: 'O Gastador Impulsivo',
+    tagline: 'Você decide em 3 segundos e paga por 3 meses.',
+    desc: 'Você não gasta mal de propósito — gasta rápido demais pra perceber. A decisão acontece antes da conta: um clique, um "leva", um pedido. Cada compra isolada parece pequena e justificável. O extrato no fim do mês é a única testemunha, e aí já é tarde. Seu ralo é a velocidade.',
+    steps: [
+      { n: '1', text: 'Instale um atrito: tire o cartão salvo dos apps. Ter que digitar 16 dígitos já derruba metade dos impulsos.' },
+      { n: '2', text: 'Regra das 24h para qualquer compra acima de R$ 100. Se ainda quiser amanhã, compre.' },
+      { n: '3', text: 'Antes de finalizar uma compra, pergunte em voz alta: isso estava nos meus planos hoje de manhã?' },
+    ],
+    detectorPresets: { impulso: 350, delivery: 250, streaming: 80, cartao: 150 },
+  },
+  controlado: {
+    emoji: '🔍',
+    title: 'O Gastador Quase Controlado',
+    tagline: 'Você controla cada real — e mesmo assim não sobra.',
+    desc: 'Você pesquisa preço, compara, usa cupom, leva lista. Faz tudo certo — e mesmo assim o mês fecha apertado. O motivo é desconfortável: você vigia os R$ 20 e não vê os R$ 800 que saem sozinhos todo mês. Assinaturas, tarifas, planos, parcelas antigas. Seu ralo não é o que você escolhe gastar. É o que já está gastando sem precisar da sua escolha.',
+    steps: [
+      { n: '1', text: 'Liste TODO débito recorrente: assinaturas, tarifas, seguros, planos, parcelas. É aí que mora o seu ralo.' },
+      { n: '2', text: 'Pra cada um, pergunte: se aparecesse hoje pela primeira vez, eu assinaria? Se não, cancele.' },
+      { n: '3', text: 'Some os fixos e compare com o que você economiza pesquisando preço. O desequilíbrio vai te incomodar.' },
+    ],
+    detectorPresets: { streaming: 120, esquecida: 90, cartao: 200, academia: 130 },
+  },
+  emocional: {
+    emoji: '🎭',
+    title: 'O Gastador Emocional',
+    tagline: 'Você não compra coisas. Compra alívio.',
+    desc: 'Dia difícil, semana pesada, briga, cansaço. O gasto entra como remédio: melhora a hora e some no dia seguinte, mas a fatura fica. Não é falta de disciplina — é um padrão que resolve uma dor real com uma ferramenta errada. Seu ralo é o gatilho, não o produto.',
+    steps: [
+      { n: '1', text: 'Antes de comprar, nomeie o que está sentindo. Só nomear já quebra boa parte do automatismo.' },
+      { n: '2', text: 'Monte uma lista de alívios que não custam nada — e deixe visível pra usar no lugar da compra.' },
+      { n: '3', text: 'Olhe suas 3 últimas compras por impulso: o que estava acontecendo naquele dia? O padrão aparece rápido.' },
+    ],
+    detectorPresets: { impulso: 300, delivery: 220, streaming: 90 },
+  },
+  despreocupado: {
+    emoji: '🌤️',
+    title: 'O Gastador Despreocupado',
+    tagline: 'Mês que vem eu resolvo — há doze meses.',
+    desc: 'Você sabe que precisa organizar. E vai. Mês que vem. Seu ralo não é uma compra específica — é o intervalo entre saber e fazer. Enquanto isso, tudo continua saindo no piloto automático, e cada mês adiado custa exatamente um mês. O gasto mais caro da sua vida é o "depois".',
+    steps: [
+      { n: '1', text: 'Faça UMA coisa hoje, agora. Cancelar uma assinatura, transferir R$ 50. Pequena, mas hoje.' },
+      { n: '2', text: 'Marque no calendário 20 minutos com data e hora pra revisar seus gastos. Sem data, não acontece.' },
+      { n: '3', text: 'Escreva a data de hoje ao lado da meta. Prazo sem data é intenção, não plano.' },
+    ],
+    detectorPresets: { streaming: 100, delivery: 250, esquecida: 70, cartao: 150 },
+  },
+};
+
+function fmt(n) { return Math.round(n).toLocaleString('pt-BR'); }
+
+class Component extends DCLogic {
+  state = {
+    screen: 'intro',
+    q: 0,
+    answers: [],
+    gateName: '',
+    gateEmail: '',
+    shareLabel: '📲 Compartilhar resultado',
+    imageLabel: '🖼 Salvar como imagem',
+  };
+
+  getProfile() {
+    const counts = { impulsivo: 0, controlado: 0, emocional: 0, despreocupado: 0 };
+    this.state.answers.forEach(a => { counts[a.type] = (counts[a.type] || 0) + 1; });
+    let max = 0, winner = 'impulsivo';
+    for (const [k, v] of Object.entries(counts)) {
+      if (v > max) { max = v; winner = k; }
+    }
+    return PROFILES[winner];
+  }
+
+  getTopLeakCategories() {
+    const catCounts = {};
+    this.state.answers.forEach(a => {
+      (a.cats || []).forEach(c => { catCounts[c] = (catCounts[c] || 0) + 1; });
+    });
+    const sorted = Object.entries(catCounts).sort((a, b) => b[1] - a[1]);
+    const top = sorted.slice(0, 3);
+    const severities = ['Ralo principal', 'Ralo forte', 'Ralo ativo'];
+    return top.map(([key, count], i) => ({
+      ...LEAK_CATS[key],
+      severity: severities[i] || 'Ativo',
+    }));
+  }
+
+  getDetectorLink() {
+    const profile = this.getProfile();
+    const presets = profile.detectorPresets || {};
+    const params = new URLSearchParams();
+    params.set('perfil', profile.title);
+    Object.entries(presets).forEach(([k, v]) => params.set(k, v));
+    return 'detector-de-vazamentos.dc.html?' + params.toString();
+  }
+
+  renderVals() {
+    const { screen, q, answers, gateName, gateEmail } = this.state;
+    const cur = QUESTIONS[q] || QUESTIONS[0];
+    const profile = answers.length === 5 ? this.getProfile() : null;
+    const leakCats = answers.length === 5 ? this.getTopLeakCategories() : [];
+
+    return {
+      showIntro: screen === 'intro',
+      showQuestion: screen === 'question',
+      showEmailGate: screen === 'gate',
+      showResult: screen === 'result',
+      start: () => this.setState({ screen: 'question', q: 0, answers: [] }),
+      restart: () => this.setState({ screen: 'intro', q: 0, answers: [], gateName: '', gateEmail: '', shareLabel: '📲 Compartilhar resultado', imageLabel: '🖼 Salvar como imagem' }),
+
+      progressPct: Math.round((q / 5) * 100),
+      qLabel: `${q + 1}/5`,
+      qText: cur.text,
+      options: cur.opts.map((o, i) => ({
+        letter: String.fromCharCode(65 + i),
+        text: o.text,
+        pick: () => {
+          const na = [...this.state.answers, { type: o.type, cats: o.cats }];
+          if (this.state.q >= 4) {
+            this.setState({ answers: na, screen: 'gate' });
+          } else {
+            this.setState({ answers: na, q: this.state.q + 1 });
+          }
+        },
+      })),
+
+      gateName,
+      gateEmail,
+      setGateName: (e) => this.setState({ gateName: e.target.value }),
+      setGateEmail: (e) => this.setState({ gateEmail: e.target.value }),
+      revealResult: () => {
+        if (!this.state.gateEmail.includes('@')) return;
+        const fd = new FormData();
+        fd.append('nome', this.state.gateName);
+        fd.append('email', this.state.gateEmail);
+        fd.append('_subject', 'Lead Quiz — Para onde foi o meu dinheiro');
+        fd.append('origem', 'quiz-vazamento-rastro');
+        fd.append('perfil', this.getProfile().title);
+        fd.append('ralos', this.getTopLeakCategories().map(c => c.name).join(', '));
+        fetch('https://formspree.io/f/meewypjj', { method: 'POST', body: fd, headers: { 'Accept': 'application/json' } }).catch(() => {});
+        this.setState({ screen: 'result' });
+      },
+
+      resultEmoji: profile ? profile.emoji : '',
+      resultTitle: profile ? profile.title : '',
+      resultTagline: profile ? profile.tagline : '',
+      resultDesc: profile ? profile.desc : '',
+      resultSteps: profile ? profile.steps : [],
+      leakCategories: leakCats,
+      detectorLink: answers.length === 5 ? this.getDetectorLink() : '#',
+
+      shareLabel: this.state.shareLabel,
+      imageLabel: this.state.imageLabel,
+      shareResult: async () => {
+        const p = this.getProfile();
+        const cats = this.getTopLeakCategories();
+        const catNames = cats.map(c => c.name.toLowerCase()).join(', ');
+        const text = `Descobri que meu dinheiro está vazando por: ${catNames}. Meu perfil: "${p.title}". Descubra o seu:`;
+        const url = 'https://metodorastro.com.br';
+        if (navigator.share) {
+          try { await navigator.share({ text, url }); return; } catch (e) {}
+        }
+        try {
+          await navigator.clipboard.writeText(text + ' ' + url);
+          this.setState({ shareLabel: '✓ Link copiado!' });
+          setTimeout(() => this.setState({ shareLabel: '📲 Compartilhar resultado' }), 2200);
+        } catch (e) {}
+      },
+      generateImage: async () => {
+        const p = this.getProfile();
+        const cats = this.getTopLeakCategories();
+        const canvas = document.getElementById('share-canvas-quiz');
+        if (!canvas) return;
+        const ctx = canvas.getContext('2d');
+        const W = 1080, H = 1350;
+
+        ctx.fillStyle = '#0f2419';
+        ctx.fillRect(0, 0, W, H);
+        ctx.fillStyle = 'rgba(232,161,60,.06)';
+        ctx.beginPath(); ctx.arc(W - 40, 100, 260, 0, Math.PI * 2); ctx.fill();
+
+        ctx.fillStyle = '#e8a13c';
+        ctx.font = '800 24px Archivo, sans-serif';
+        ctx.fillText('PARA ONDE FOI O MEU DINHEIRO?', 70, 90);
+        ctx.fillStyle = '#9cc6a6';
+        ctx.font = '500 18px Archivo, sans-serif';
+        ctx.fillText('Quiz · R.A.S.T.R.O.', 70, 120);
+
+        ctx.font = '80px serif';
+        ctx.fillText(p.emoji, 70, 230);
+
+        ctx.fillStyle = '#fff';
+        ctx.font = '700 64px Spectral, serif';
+        let ty = 330;
+        const tw = p.title.split(' ');
+        let tl = '';
+        for (const w of tw) {
+          const test = tl + w + ' ';
+          if (ctx.measureText(test).width > W - 140 && tl) {
+            ctx.fillText(tl.trim(), 70, ty); tl = w + ' '; ty += 74;
+          } else { tl = test; }
+        }
+        if (tl) { ctx.fillText(tl.trim(), 70, ty); ty += 30; }
+
+        ctx.fillStyle = '#e8a13c';
+        ctx.font = 'italic 500 28px Spectral, serif';
+        ctx.fillText(p.tagline, 70, ty + 30);
+        ty += 80;
+
+        ctx.fillStyle = '#e8a13c';
+        ctx.font = '700 20px Archivo, sans-serif';
+        ctx.fillText('SEUS RALOS', 70, ty);
+        ty += 36;
+
+        cats.forEach(cat => {
+          ctx.fillStyle = 'rgba(255,255,255,.06)';
+          ctx.beginPath(); ctx.roundRect(70, ty - 8, W - 140, 70, 12); ctx.fill();
+          ctx.font = '32px serif';
+          ctx.fillText(cat.icon, 90, ty + 34);
+          ctx.fillStyle = '#fff';
+          ctx.font = '600 22px Archivo, sans-serif';
+          ctx.fillText(cat.name, 140, ty + 22);
+          ctx.fillStyle = '#9cc6a6';
+          ctx.font = '400 17px Archivo, sans-serif';
+          ctx.fillText(cat.desc, 140, ty + 48);
+          ctx.fillStyle = '#e8a13c';
+          ty += 84;
+        });
+
+        const footY = Math.max(ty + 60, H - 140);
+        ctx.fillStyle = 'rgba(255,255,255,.1)';
+        ctx.fillRect(70, footY, W - 140, 1);
+        ctx.fillStyle = '#9cc6a6';
+        ctx.font = '500 22px Archivo, sans-serif';
+        ctx.fillText('Descubra para onde vai o seu dinheiro em', 70, footY + 45);
+        ctx.fillStyle = '#e8a13c';
+        ctx.font = '700 32px Archivo, sans-serif';
+        ctx.fillText('metodorastro.com.br', 70, footY + 88);
+
+        canvas.toBlob(async (blob) => {
+          const file = new File([blob], 'meu-perfil-vazamento.png', { type: 'image/png' });
+          if (navigator.canShare && navigator.canShare({ files: [file] })) {
+            try { await navigator.share({ files: [file], text: 'Descobri para onde vai meu dinheiro!' }); return; } catch (e) {}
+          }
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = url; a.download = 'meu-perfil-vazamento.png';
+          a.click();
+          URL.revokeObjectURL(url);
+        }, 'image/png');
+
+        this.setState({ imageLabel: '✓ Imagem gerada!' });
+        setTimeout(() => this.setState({ imageLabel: '🖼 Salvar como imagem' }), 2500);
+      },
+    };
+  }
+}
+
+</script>
+</body>
+</html>
