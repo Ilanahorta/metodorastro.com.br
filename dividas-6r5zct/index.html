@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex,nofollow,noarchive">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Simulador de Quitação de Dívidas · R.A.S.T.R.O.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Archivo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:#f7f4ee;color:#2A2521;font-family:'Archivo',sans-serif}
+a{color:#2f6b47}a:hover{color:#234f36}
+.sec{background:#fff;border:1px solid rgba(42,37,33,.08);border-radius:16px;padding:clamp(20px,3vw,28px);margin-bottom:18px}
+.sec-title{font:600 12px/1 'Archivo',sans-serif;letter-spacing:.14em;text-transform:uppercase;color:#6b6256;margin-bottom:14px}
+.inp{font:400 14px/1.4 'Archivo',sans-serif;border:1px solid rgba(42,37,33,.15);border-radius:10px;padding:10px 12px;width:100%;background:#fff;color:#2A2521}
+.inp:focus{outline:2px solid #2f6b47;outline-offset:1px}
+.strat-btn{border:2px solid rgba(42,37,33,.12);border-radius:12px;padding:16px;cursor:pointer;text-align:left;background:transparent;color:#2A2521;width:100%}
+.strat-btn.active{background:#2f6b47;color:#fff;border-color:#2f6b47}
+.strat-btn .st{font:700 15px/1.2 'Archivo',sans-serif;margin-bottom:6px}
+.strat-btn .sd{font:400 13px/1.4 'Archivo',sans-serif;opacity:.75}
+.debt-item{background:#faf9f5;border:1px solid rgba(42,37,33,.06);border-radius:12px;padding:14px;margin-bottom:10px}
+.debt-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr 32px;gap:8px;align-items:center}
+.debt-info{font:400 12px/1.5 'Archivo',sans-serif;padding:8px 0 2px}
+.debt-info-ok{color:#2f6b47}.debt-info-warn{color:#c47d23}
+.rm-btn{background:none;border:none;font-size:18px;color:#8a8174;cursor:pointer;padding:0}
+.add-btn{background:none;border:1px dashed rgba(42,37,33,.2);border-radius:10px;padding:12px;width:100%;cursor:pointer;font:500 14px/1 'Archivo',sans-serif;color:#2f6b47;margin-top:8px}
+.add-btn:hover{background:rgba(47,107,71,.04)}
+.order-item{display:flex;align-items:center;gap:10px;padding:8px 0}
+.order-item+.order-item{border-top:1px solid rgba(255,255,255,.08)}
+.order-n{flex-shrink:0;width:26px;height:26px;border-radius:50%;background:rgba(255,255,255,.15);font:700 12px/26px 'Archivo',sans-serif;text-align:center}
+.order-name{flex:1;font:500 14px/1.3 'Archivo',sans-serif}
+.order-time{font:400 13px/1 'Archivo',sans-serif;color:rgba(255,255,255,.6)}
+@media(max-width:640px){.debt-grid{grid-template-columns:1fr 1fr;}.hero-hide{display:none}}
+
+@media print{
+  [data-noprint]{display:none!important}
+  nav{display:none!important}
+  body{background:#fff!important}
+  .sec,.cat-card,.renda-card{border-color:#ccc!important;box-shadow:none!important;break-inside:avoid}
+  a[href]:after{content:''}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav style="position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:0 clamp(20px,4vw,52px);height:60px;background:rgba(247,244,238,.94);backdrop-filter:blur(6px);border-bottom:1px solid rgba(42,37,33,.08)">
+  <span style="font:500 13.5px/1 'Archivo',sans-serif;color:#6b6256;text-decoration:none">Método R.A.S.T.R.O.</span>
+  <span style="font:600 13px/1 'Archivo',sans-serif;color:#2f6b47;letter-spacing:.08em;text-transform:uppercase">Simulador de Quitação</span>
+</nav>
+
+<div style="max-width:800px;margin:0 auto;padding:clamp(28px,5vw,56px) clamp(16px,4vw,40px)">
+
+  <!-- HEADER -->
+  <div style="text-align:center;margin-bottom:clamp(32px,5vw,48px)">
+    <div style="font:700 10px/1 'Archivo',sans-serif;letter-spacing:.28em;text-transform:uppercase;color:#e8a13c;margin-bottom:10px">Ferramenta do Método R.A.S.T.R.O.</div>
+    <h1 style="font-family:'Spectral',serif;font-weight:600;font-size:clamp(28px,4vw,40px);line-height:1.1;margin:0 0 12px">Simulador de Quitação de Dívidas</h1>
+    <p style="font:400 clamp(14px,1.3vw,16px)/1.6 'Archivo',sans-serif;color:#6b6256;max-width:520px;margin:0 auto">Cadastre suas dívidas, escolha a estratégia e descubra quando será livre delas — e quanto economiza com cada método.</p>
+  </div>
+
+
+  <div class="sec">
+    <div class="sec-title">Como usar</div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));gap:18px">
+      <div style="display:flex;gap:12px;align-items:flex-start"><div style="flex-shrink:0;width:26px;height:26px;border-radius:50%;background:#2f6b47;color:#fff;font:700 13px/26px 'Archivo',sans-serif;text-align:center">1</div><p style="font:400 13.5px/1.55 'Archivo',sans-serif;color:#2A2521;margin:0">Lance cada dívida: nome, saldo, juros ao ano e quanto você paga por mês.</p></div>
+      <div style="display:flex;gap:12px;align-items:flex-start"><div style="flex-shrink:0;width:26px;height:26px;border-radius:50%;background:#2f6b47;color:#fff;font:700 13px/26px 'Archivo',sans-serif;text-align:center">2</div><p style="font:400 13.5px/1.55 'Archivo',sans-serif;color:#2A2521;margin:0">Escolha a estratégia — bola de neve (menor saldo primeiro) ou avalanche (juro maior primeiro).</p></div>
+      <div style="display:flex;gap:12px;align-items:flex-start"><div style="flex-shrink:0;width:26px;height:26px;border-radius:50%;background:#2f6b47;color:#fff;font:700 13px/26px 'Archivo',sans-serif;text-align:center">3</div><p style="font:400 13.5px/1.55 'Archivo',sans-serif;color:#2A2521;margin:0">Some um valor extra por mês e veja a data de quitação andar para trás.</p></div>
+    </div>
+    <p style="font:400 12.5px/1.55 'Archivo',sans-serif;color:#6b6256;margin:18px 0 0;padding-top:15px;border-top:1px solid rgba(42,37,33,.07)">
+      <strong style="color:#2f6b47">Salva sozinho neste aparelho.</strong> O que você digita fica guardado e aparece de volta quando você voltar — sem senha, sem cadastro. <span id="save-status" style="color:#8a8174"></span><br>
+      Vai usar em outro celular ou no computador? Imprima antes: o que está aqui fica só neste aparelho.
+    </p>
+  </div>
+
+  <!-- ESTRATÉGIA -->
+  <div class="sec">
+    <div class="sec-title">Estratégia de quitação</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+      <button class="strat-btn active" id="btn-snowball" onclick="setStrategy('snowball')">
+        <div class="st">❄️ Bola de Neve</div>
+        <div class="sd">Pague primeiro a menor dívida. Ganha motivação rápido.</div>
+      </button>
+      <button class="strat-btn" id="btn-avalanche" onclick="setStrategy('avalanche')">
+        <div class="st">🏔️ Avalanche</div>
+        <div class="sd">Pague primeiro a maior taxa de juros. Economiza mais.</div>
+      </button>
+    </div>
+  </div>
+
+  <!-- DÍVIDAS -->
+  <div class="sec">
+    <div class="sec-title">Suas dívidas</div>
+    <div style="display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr 32px;gap:8px;padding-bottom:10px;font:600 11px/1 'Archivo',sans-serif;letter-spacing:.06em;text-transform:uppercase;color:#8a8174;border-bottom:1px solid rgba(42,37,33,.08);margin-bottom:12px" class="debt-grid hero-hide">
+      <span>Nome</span><span>Saldo (R$)</span><span>Taxa a.a. (%)</span><span>Pgto mín. (R$)</span><span></span>
+    </div>
+    <div id="debt-list"></div>
+    <button class="add-btn" onclick="addDebt()">+ Adicionar dívida</button>
+    <div style="font:400 12px/1.5 'Archivo',sans-serif;color:#8a8174;margin-top:10px;font-style:italic">💡 Se você não souber a taxa da sua dívida, pergunte ao seu gerente ou confira no extrato de quitação.</div>
+
+    <div style="margin-top:18px;padding-top:18px;border-top:1px solid rgba(42,37,33,.08)">
+      <label style="display:block;font:600 12px/1.4 'Archivo',sans-serif;color:#6b6256;margin-bottom:6px">Pagamento extra mensal (R$)</label>
+      <input class="inp" type="number" id="extra" value="200" placeholder="0" oninput="calcular()" style="max-width:200px">
+      <div style="font:400 12px/1.4 'Archivo',sans-serif;color:#8a8174;margin-top:6px">Quanto a mais, além dos mínimos, você consegue pagar por mês?</div>
+    </div>
+  </div>
+
+  <!-- RESULTADOS -->
+  <div style="background:#255339;border-radius:16px;padding:clamp(24px,3vw,32px);margin-bottom:18px;color:#fff">
+    <div style="font:700 10px/1 'Archivo',sans-serif;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.5);margin-bottom:18px">Resultado</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:18px">
+      <div>
+        <div style="font:400 12px/1.4 'Archivo',sans-serif;color:rgba(255,255,255,.6);margin-bottom:4px">Data de liberdade</div>
+        <div id="res-date" style="font-family:'Spectral',serif;font-weight:600;font-size:24px;line-height:1.1">—</div>
+        <div id="res-months" style="font:400 13px/1.4 'Archivo',sans-serif;color:rgba(255,255,255,.7);margin-top:4px">Preencha suas dívidas</div>
+      </div>
+      <div>
+        <div style="font:400 12px/1.4 'Archivo',sans-serif;color:rgba(255,255,255,.6);margin-bottom:4px">Total pago em juros</div>
+        <div id="res-interest" style="font-family:'Spectral',serif;font-weight:600;font-size:24px;line-height:1.1">—</div>
+        <div id="res-saved" style="font:400 13px/1.4 'Archivo',sans-serif;color:#bfe0c4;margin-top:4px"></div>
+      </div>
+    </div>
+    <div style="border-top:1px solid rgba(255,255,255,.12);padding-top:16px">
+      <div style="font:600 12px/1 'Archivo',sans-serif;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.5);margin-bottom:12px">Ordem de quitação</div>
+      <div id="res-order"></div>
+    </div>
+  </div>
+
+  
+<div data-noprint="1" style="background:#fff;border:1px solid rgba(42,37,33,.08);border-radius:16px;padding:clamp(18px,2.5vw,24px);margin-bottom:18px;display:flex;justify-content:space-between;align-items:center;gap:18px;flex-wrap:wrap">
+  <div><div style="font:600 15px/1.3 'Archivo',sans-serif;margin-bottom:5px">Leve os seus números</div><p style="font:400 13px/1.5 'Archivo',sans-serif;color:#6b6256;margin:0">Imprima ou salve em PDF para guardar, comparar depois ou levar para outro aparelho.</p></div>
+  <button onclick="window.print()" style="background:#2f6b47;color:#fff;padding:12px 22px;border-radius:10px;font:600 14px/1 'Archivo',sans-serif;cursor:pointer;border:none">Imprimir / salvar PDF</button>
+</div>
+<div data-noprint="1" style="background:linear-gradient(135deg,#0f2419,#255339);border-radius:16px;padding:clamp(24px,3vw,32px);margin-bottom:18px;color:#fff;display:flex;gap:clamp(18px,3vw,30px);align-items:center;flex-wrap:wrap">
+  <div style="flex:1;min-width:250px">
+    <div style="font:700 10px/1 'Archivo',sans-serif;letter-spacing:.2em;text-transform:uppercase;color:#e8a13c;margin-bottom:12px">Complete o método</div>
+    <div style="font-family:'Spectral',serif;font-weight:600;font-size:clamp(21px,2.6vw,27px);line-height:1.15;margin-bottom:12px">Faltam três ferramentas — e o livro que explica as quatro</div>
+    <p style="font:400 14px/1.6 'Archivo',sans-serif;color:rgba(255,255,255,.82);margin:0 0 8px">Você já tem a <strong style="color:#fff">Simulador de Quitação de Dívidas</strong>. As outras três — Planilha de Orçamento, Índice Financeiro e Detector de Vazamentos — saem <strong style="color:#fff">R$ 27 cada</strong>, separadas: R$ 81.</p>
+    <p style="font:400 14px/1.6 'Archivo',sans-serif;color:rgba(255,255,255,.82);margin:0 0 20px">No pacote com o livro, as quatro juntas custam <strong style="color:#e8a13c;font-size:16px">R$ 59,09</strong> — menos que duas avulsas.</p>
+    <a href="https://pay.hotmart.com/W106793169N" style="display:inline-block;background:#e8a13c;color:#0f2419;padding:13px 24px;border-radius:10px;font:700 14px/1 'Archivo',sans-serif;text-decoration:none">Quero o pacote completo →</a>
+    <p style="font:400 12px/1.5 'Archivo',sans-serif;color:rgba(255,255,255,.5);margin:14px 0 0">As quatro ferramentas, compradas uma a uma, sairiam R$ 108.</p>
+  </div>
+  <div style="flex-shrink:0;width:140px;height:180px;display:flex;align-items:center;justify-content:center">
+    <img src="capa-final-produto.png" alt="Livro R.A.S.T.R.O. — Para onde foi o meu dinheiro?" style="height:100%;object-fit:cover;border-radius:8px;box-shadow:0 8px 24px rgba(0,0,0,.3)">
+  </div>
+</div>
+
+  <div style="text-align:center;padding:24px 0 40px;font:400 13px/1.5 'Archivo',sans-serif;color:#8a8174">
+    <p style="margin:0 0 4px">Ferramenta exclusiva do <strong>Método R.A.S.T.R.O.</strong> · Ilana Horta</p>
+    <p style="margin:0">© 2026 · Todos os direitos reservados</p>
+  </div>
+</div>
+
+<script>
+var debts=[{id:1,name:'Cartão de crédito',balance:5000,rate:180,min:150},{id:2,name:'Financiamento',balance:20000,rate:24,min:450}];
+var strategy='snowball',nextId=3;
+
+function fmt(n){return 'R$ '+Math.round(n).toLocaleString('pt-BR');}
+function fmtM(n){var y=Math.floor(n/12),m=n%12;return(y>0?y+' ano'+(y>1?'s':'')+(m>0?' e '+m+' mês'+(m>1?'es':''):''):(m+' mês'+(m>1?'es':'')));}
+
+function setStrategy(s){
+  strategy=s;
+  document.getElementById('btn-snowball').className='strat-btn'+(s==='snowball'?' active':'');
+  document.getElementById('btn-avalanche').className='strat-btn'+(s==='avalanche'?' active':'');
+  calcular();
+}
+
+function renderDebts(){
+  var list=document.getElementById('debt-list');
+  list.innerHTML=debts.map(function(d,i){
+    var mInt=(d.balance>0&&d.rate>0)?Math.ceil(d.balance*(d.rate/100/12)):0;
+    var ok=mInt>0&&d.min>mInt;
+    var info=mInt>0?'<div class="debt-info '+(ok?'debt-info-ok':'debt-info-warn')+'">'+(ok?'✓ Juros mensais: R$ '+mInt+' · Seu mínimo cobre os juros — ótimo!':'⚠ Juros mensais: R$ '+mInt+'. Seu pagamento mínimo precisa ser maior que isso para quitar.')+'</div>':'';
+    return '<div class="debt-item"><div class="debt-grid">'+
+      '<input class="inp" placeholder="Ex: Nubank" value="'+d.name+'" oninput="updDebt('+i+',\'name\',this.value)">'+
+      '<input class="inp" type="number" placeholder="5000" value="'+(d.balance||'')+'" oninput="updDebt('+i+',\'balance\',+this.value)">'+
+      '<input class="inp" type="number" placeholder="180" value="'+(d.rate||'')+'" oninput="updDebt('+i+',\'rate\',+this.value)">'+
+      '<input class="inp" type="number" placeholder="150" value="'+(d.min||'')+'" oninput="updDebt('+i+',\'min\',+this.value)">'+
+      '<button class="rm-btn" onclick="rmDebt('+i+')">×</button>'+
+      '</div>'+info+'</div>';
+  }).join('');
+}
+
+function updDebt(i,k,v){debts[i][k]=v;renderDebts();calcular();}
+function rmDebt(i){debts.splice(i,1);renderDebts();calcular();}
+function addDebt(){debts.push({id:nextId++,name:'',balance:0,rate:0,min:0});renderDebts();}
+
+function calcDebtSim(ds,extra,strat){
+  var all=ds.filter(function(d){return d.balance>0&&d.min>0;}).map(function(d){return{name:d.name,balance:d.balance,rate:d.rate/100/12,min:d.min};});
+  if(!all.length)return null;
+  var impossible=all.filter(function(d){return d.min<=d.balance*d.rate;});
+  var items=all.filter(function(d){return d.min>d.balance*d.rate;});
+  var warning=impossible.length?impossible.map(function(d){return'"'+d.name+'": pgto mín R$'+d.min+' < juros mensais R$'+Math.ceil(d.balance*d.rate)+'. Aumente o pagamento!';}).join(' | '):null;
+  if(!items.length)return{error:warning};
+  var months=0,totalInt=0,freed=[],extraPool=+extra||0;
+  for(var m=0;m<600&&items.some(function(d){return d.balance>0;});m++){
+    items.forEach(function(d){if(d.balance<=0)return;var int=d.balance*d.rate;totalInt+=int;d.balance+=int;var pay=Math.min(d.balance,d.min);d.balance=Math.max(0,d.balance-pay);});
+    var active=items.filter(function(d){return d.balance>0;});
+    if(strat==='snowball')active.sort(function(a,b){return a.balance-b.balance;});
+    else active.sort(function(a,b){return b.rate-a.rate;});
+    var rem=extraPool;
+    active.forEach(function(d){if(rem<=0)return;var pay=Math.min(d.balance,rem);d.balance=Math.max(0,d.balance-pay);rem-=pay;});
+    items.forEach(function(d){if(d.balance<=0&&!freed.find(function(f){return f.name===d.name;}))freed.push({name:d.name,month:m+1});});
+    months++;
+  }
+  var items2=ds.filter(function(d){return d.balance>0&&d.min>0&&d.min>d.balance*(d.rate/100/12);}).map(function(d){return{balance:d.balance,rate:d.rate/100/12,min:d.min};});
+  var minInt=0;
+  for(var m2=0;m2<600&&items2.some(function(d){return d.balance>0;});m2++){
+    items2.forEach(function(d){if(d.balance<=0)return;var int=d.balance*d.rate;minInt+=int;d.balance+=int;var pay=Math.min(d.balance,d.min);d.balance=Math.max(0,d.balance-pay);});
+  }
+  return{months:months,totalInt:totalInt,saved:Math.max(0,minInt-totalInt),order:freed,warning:warning};
+}
+
+function calcular(){
+  var extra=+(document.getElementById('extra')||{}).value||0;
+  var res=calcDebtSim(debts,extra,strategy);
+  var elDate=document.getElementById('res-date'),elMonths=document.getElementById('res-months'),elInt=document.getElementById('res-interest'),elSaved=document.getElementById('res-saved'),elOrder=document.getElementById('res-order');
+  if(!res){elDate.textContent='—';elMonths.textContent='Preencha suas dívidas';elInt.textContent='—';elSaved.textContent='';elOrder.innerHTML='';return;}
+  if(res.error){elDate.textContent='⚠️';elMonths.textContent=res.error;elInt.textContent='—';elSaved.textContent='';elOrder.innerHTML='';return;}
+  var dt=new Date();dt.setMonth(dt.getMonth()+res.months);
+  elDate.textContent=dt.toLocaleDateString('pt-BR',{month:'long',year:'numeric'});
+  elMonths.textContent=fmtM(res.months)+' a partir de hoje';
+  elInt.textContent=fmt(res.totalInt);
+  elSaved.textContent=extra>0?'Economia vs. só mínimos: '+fmt(res.saved):'Adicione pagamento extra para economizar mais';
+  elOrder.innerHTML=res.order.map(function(o,i){
+    return '<div class="order-item"><span class="order-n">'+(i+1)+'</span><span class="order-name">'+o.name+'</span><span class="order-time">'+fmtM(o.month)+'</span></div>';
+  }).join('')||'<div style="font:400 13px/1 sans-serif;color:rgba(255,255,255,.4)">Aguardando cálculo...</div>';
+  if(res.warning){elMonths.textContent+=(' · ⚠ '+res.warning);}
+  if(typeof salvar==="function")salvar();
+}
+
+var LS='rst_dividas_v1';
+function salvar(){
+  try{localStorage.setItem(LS,JSON.stringify({debts:debts,strategy:strategy,extra:(document.getElementById('extra')||{}).value||''}));}catch(e){}
+  var st=document.getElementById('save-status');
+  if(st&&window._rstPronto)st.textContent='· salvo '+new Date().toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'});
+}
+(function(){
+  var raw=null;try{raw=localStorage.getItem(LS);}catch(e){}
+  if(!raw)return;
+  var d=null;try{d=JSON.parse(raw);}catch(e){}
+  if(!d)return;
+  if(Array.isArray(d.debts)&&d.debts.length){debts=d.debts;nextId=debts.length+1;}
+  if(d.strategy){strategy=d.strategy;
+    document.getElementById('btn-snowball').className='strat-btn'+(strategy==='snowball'?' active':'');
+    document.getElementById('btn-avalanche').className='strat-btn'+(strategy==='avalanche'?' active':'');}
+  if(d.extra!=null)document.getElementById('extra').value=d.extra;
+})();
+renderDebts();
+calcular();
+window._rstPronto=true;
+</script>
+</body>
+</html>
