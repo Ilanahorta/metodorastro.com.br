@@ -1,0 +1,6 @@
+User-agent: *
+Disallow: /bonus-rst-8f42kd/
+Disallow: /orcamento-9k4m2x/
+Disallow: /detector-4w8hns/
+Disallow: /dividas-6r5zct/
+Disallow: /indice-7t3vqb/
