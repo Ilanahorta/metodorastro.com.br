@@ -4,6 +4,28 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script src="./support.js"></script>
+<script>
+/* ═══════════════════════════════════════════════════════════════
+   BREVO — cole aqui a URL do seu formulário (um lugar só)
+   Onde achar: Brevo → Contatos → Formulários → criar/editar →
+   Compartilhar → "Ação do formulário" (começa com https://sibforms.com/serve/)
+   Enquanto estiver vazio, os leads continuam chegando pelo Formspree.
+   ═══════════════════════════════════════════════════════════════ */
+window.BREVO_FORM_URL = '';
+
+window.enviarParaBrevo = function (dados) {
+  if (!window.BREVO_FORM_URL) return;
+  var fd = new FormData();
+  fd.append('EMAIL', dados.email || '');
+  fd.append('NOME', dados.nome || '');
+  if (dados.perfil) fd.append('PERFIL', dados.perfil);
+  if (dados.etapa) fd.append('ETAPA', dados.etapa);
+  if (dados.ralos) fd.append('RALOS', dados.ralos);
+  fd.append('email_address_check', '');
+  fd.append('locale', 'pt');
+  fetch(window.BREVO_FORM_URL, { method: 'POST', body: fd, mode: 'no-cors' }).catch(function () {});
+};
+</script>
 </head>
 <body>
 <x-dc>
@@ -25,7 +47,7 @@ a:hover{color:#1a4a2d}
 
 <nav style="position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:0 clamp(20px,4vw,52px);height:60px;background:rgba(247,244,238,.94);backdrop-filter:blur(6px);border-bottom:1px solid rgba(42,37,33,.08)">
   <a href="index.html" style="font:500 14.5px/1 'Archivo',sans-serif;color:#6b6256;text-decoration:none">← R.A.S.T.R.O.</a>
-  <a href="https://pay.hotmart.com/W106793169N" target="_blank" style="background:#e8a13c;color:#234f36;font:800 14px/1 'Archivo',sans-serif;padding:10px 18px;border-radius:999px;border:2px solid #234f36;text-decoration:none;white-space:nowrap">Quero o Check-up →</a>
+  <a href="https://pay.hotmart.com/W106793169N" target="_blank" style="background:#e8a13c;color:#234f36;font:800 14px/1 'Archivo',sans-serif;padding:10px 18px;border-radius:999px;border:2px solid #234f36;text-decoration:none;white-space:nowrap">Livro + 4 ferramentas →</a>
 </nav>
 
 <!-- INTRO -->
@@ -275,9 +297,41 @@ class Component extends DCLogic {
     answers: [],
     gateName: '',
     gateEmail: '',
+    leadPronto: false,
     shareLabel: '📲 Compartilhar resultado',
     imageLabel: '🖼 Salvar como imagem',
   };
+
+  componentDidMount() {
+    try {
+      const raw = localStorage.getItem('rst_lead');
+      if (raw) {
+        const d = JSON.parse(raw);
+        if (d && d.email && d.email.indexOf('@') > 0) {
+          this.setState({ gateName: d.nome || '', gateEmail: d.email, leadPronto: true });
+        }
+      }
+    } catch (e) {}
+  }
+
+  enviarLead(extra) {
+    const fd = new FormData();
+    fd.append('nome', this.state.gateName);
+    fd.append('email', this.state.gateEmail);
+    fd.append('_subject', 'Lead Quiz — Para onde foi o meu dinheiro');
+    fd.append('origem', extra === 'gate' ? 'quiz-vazamento-rastro' : 'quiz-lead-da-home');
+    fd.append('etapa', '2 · quiz respondido');
+    fd.append('perfil', this.getProfile().title);
+    fd.append('ralos', this.getTopLeakCategories().map(c => c.name).join(', '));
+    fetch('https://formspree.io/f/meewypjj', { method: 'POST', body: fd, headers: { Accept: 'application/json' } }).catch(() => {});
+    if (window.enviarParaBrevo) window.enviarParaBrevo({
+      nome: this.state.gateName,
+      email: this.state.gateEmail,
+      perfil: this.getProfile().title,
+      ralos: this.getTopLeakCategories().map(function (c) { return c.name; }).join(', '),
+      etapa: '2-quiz-respondido'
+    });
+  }
 
   getProfile() {
     const counts = { impulsivo: 0, controlado: 0, emocional: 0, despreocupado: 0 };
@@ -335,7 +389,11 @@ class Component extends DCLogic {
         pick: () => {
           const na = [...this.state.answers, { type: o.type, cats: o.cats }];
           if (this.state.q >= 4) {
-            this.setState({ answers: na, screen: 'gate' });
+            if (this.state.leadPronto) {
+              this.setState({ answers: na, screen: 'result' }, () => this.enviarLead('home'));
+            } else {
+              this.setState({ answers: na, screen: 'gate' });
+            }
           } else {
             this.setState({ answers: na, q: this.state.q + 1 });
           }
@@ -348,15 +406,9 @@ class Component extends DCLogic {
       setGateEmail: (e) => this.setState({ gateEmail: e.target.value }),
       revealResult: () => {
         if (!this.state.gateEmail.includes('@')) return;
-        const fd = new FormData();
-        fd.append('nome', this.state.gateName);
-        fd.append('email', this.state.gateEmail);
-        fd.append('_subject', 'Lead Quiz — Para onde foi o meu dinheiro');
-        fd.append('origem', 'quiz-vazamento-rastro');
-        fd.append('perfil', this.getProfile().title);
-        fd.append('ralos', this.getTopLeakCategories().map(c => c.name).join(', '));
-        fetch('https://formspree.io/f/meewypjj', { method: 'POST', body: fd, headers: { 'Accept': 'application/json' } }).catch(() => {});
-        this.setState({ screen: 'result' });
+        try { localStorage.setItem('rst_lead', JSON.stringify({ nome: this.state.gateName, email: this.state.gateEmail, em: Date.now() })); } catch (e) {}
+        this.enviarLead('gate');
+        this.setState({ screen: 'result', leadPronto: true });
       },
 
       resultEmoji: profile ? profile.emoji : '',
